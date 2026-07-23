@@ -44,7 +44,7 @@ export function Navbar() {
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled
             ? "bg-black/95 backdrop-blur-md py-4 border-b border-neutral-950 shadow-lg"
-            : "bg-transparent py-6"
+            : "bg-black/95 backdrop-blur-md py-4 border-b border-neutral-950 shadow-lg"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
@@ -68,7 +68,7 @@ export function Navbar() {
                   key={item.path}
                   to={item.path}
                   className={`text-xs font-sans font-bold uppercase tracking-wider transition-colors duration-200 relative py-1.5 ${
-                    isActive ? "text-red-600" : "text-neutral-300 hover:text-white"
+                    isActive ? "text-red-600" : "text-white hover:text-red-600"
                   }`}
                 >
                   {item.label}

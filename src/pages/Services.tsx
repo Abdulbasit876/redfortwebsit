@@ -1,7 +1,6 @@
 import { motion } from "motion/react";
 import { PageBanner } from "../components/PageBanner";
 import { ServicesSection } from "../components/ServicesSection";
-import { FAQSection } from "../components/FAQSection";
 import { CTA } from "../components/CTA";
 import { SectionTitle } from "../components/SectionTitle";
 import { LucideIcon } from "../components/LucideIcon";
@@ -154,9 +153,6 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
-
-      {/* FAQ Section (All 10 FAQs) */}
-      <FAQSection />
 
       {/* CTA Section */}
       <CTA />

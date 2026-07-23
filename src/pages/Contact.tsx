@@ -150,7 +150,7 @@ export default function Contact() {
       </section>
 
       {/* Dynamic Accordion list */}
-      <FAQSection limit={4} />
+      <FAQSection limit={4} page="Contact Page" />
     </div>
   );
 }

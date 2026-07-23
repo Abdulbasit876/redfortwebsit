@@ -34,7 +34,7 @@ export default function Home() {
       <Testimonials />
 
       {/* 8. FAQ Section */}
-      <FAQSection />
+      <FAQSection page="Homepage" />
 
       {/* 9. Latest Blogs */}
       <LatestBlogs limit={4} />

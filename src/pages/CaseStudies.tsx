@@ -1,6 +1,7 @@
 import { PageBanner } from "../components/PageBanner";
 import { CaseStudiesSection } from "../components/CaseStudiesSection";
 import { CTA } from "../components/CTA";
+import { FAQSection } from "../components/FAQSection";
 
 export default function CaseStudiesPage() {
   return (
@@ -34,6 +35,9 @@ export default function CaseStudiesPage() {
 
       {/* Case studies grid (All 8 Case Studies) */}
       <CaseStudiesSection showTitle={false} />
+
+      {/* FAQ section */}
+      <FAQSection page="Case Studies" />
 
       {/* CTA section */}
       <CTA

@@ -6,20 +6,30 @@ import { LucideIcon } from "./LucideIcon";
 
 interface FAQSectionProps {
   limit?: number;
+  page?: string;
+  serviceId?: string;
 }
 
-export function FAQSection({ limit }: FAQSectionProps) {
+export function FAQSection({ limit, page, serviceId }: FAQSectionProps) {
   const [faqs, setFaqs] = useState<FAQ[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [openId, setOpenId] = useState<string | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     const fetchFaqs = async () => {
       try {
         setLoading(true);
         setError(null);
-        const response = await fetch("http://localhost:5000/api/v1/public/faqs");
+
+        const url = serviceId
+          ? `http://localhost:5000/api/v1/public/faqs?serviceId=${encodeURIComponent(serviceId)}`
+          : page
+            ? `http://localhost:5000/api/v1/public/faqs?page=${encodeURIComponent(page)}`
+            : "http://localhost:5000/api/v1/public/faqs";
+
+        const response = await fetch(url);
         
         if (!response.ok) {
           throw new Error(`Failed to fetch FAQs (${response.status})`);
@@ -55,9 +65,20 @@ export function FAQSection({ limit }: FAQSectionProps) {
     };
 
     fetchFaqs();
-  }, []);
+  }, [page, serviceId]);
 
-  const displayedFaqs = limit ? faqs.slice(0, limit) : faqs;
+  useEffect(() => {
+    setIsExpanded(false);
+    setOpenId(null);
+  }, [page, serviceId]);
+
+  const shouldCollapseHomepage = page === "Homepage" && !limit;
+  const displayedFaqs = shouldCollapseHomepage
+    ? (isExpanded ? faqs : faqs.slice(0, 5))
+    : limit
+      ? faqs.slice(0, limit)
+      : faqs;
+  const hasMoreFaqs = shouldCollapseHomepage && faqs.length > 5;
 
   const toggleFaq = (id: string) => {
     setOpenId((prev) => (prev === id ? null : id));
@@ -142,6 +163,16 @@ export function FAQSection({ limit }: FAQSectionProps) {
               </motion.div>
             );
           })}
+
+          {!loading && !error && hasMoreFaqs && (
+            <button
+              onClick={() => setIsExpanded((prev) => !prev)}
+              className="inline-flex items-center space-x-2 text-sm font-bold text-red-600 hover:text-black transition-colors duration-300 font-sans border-b-2 border-red-600 pb-1 mt-2"
+            >
+              <span>{isExpanded ? "SHOW LESS" : "VIEW MORE FAQs"}</span>
+              <span>→</span>
+            </button>
+          )}
         </div>
 
       </div>

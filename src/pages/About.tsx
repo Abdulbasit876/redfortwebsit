@@ -6,25 +6,125 @@ import { StatsSection } from "../components/StatsSection";
 import { CTA } from "../components/CTA";
 import { SectionTitle } from "../components/SectionTitle";
 import { LucideIcon } from "../components/LucideIcon";
+import { FAQSection } from "../components/FAQSection";
 import type { TeamMember } from "../types";
 
 const API_BASE_URL = "/api/v1/public";
 
+const fallbackAboutContent = {
+  title: "About Our Enterprise",
+  description: companyInfo.detailedDescription,
+  image: "https://images.unsplash.com/photo-1542744094-3a31f103e35f?q=80&w=800",
+};
+
+const fallbackStats = [
+  { id: "stat-1", value: "50+", label: "Projects Completed" },
+  { id: "stat-2", value: "30+", label: "Happy Clients" },
+  { id: "stat-3", value: "12+", label: "Industries Served" },
+  { id: "stat-4", value: "5+", label: "Years Experience" },
+  { id: "stat-5", value: "98%", label: "Client Satisfaction" },
+];
+
 function getImageUrl(image?: string) {
-  if (!image) return "https://via.placeholder.com/400x400?text=No+Image";
+  if (!image) return fallbackAboutContent.image;
   if (/^https?:\/\//i.test(image)) return image;
+  if (image.startsWith("/uploads/")) return `${API_BASE_URL}${image}`;
   if (image.startsWith("/api/v1/public")) return image;
   if (image.startsWith("/")) return `${API_BASE_URL}${image}`;
   return `${API_BASE_URL}/${image}`;
+}
+
+function formatStatValue(value: unknown, suffix: string) {
+  if (value === null || value === undefined || value === "") return suffix;
+
+  const numericValue = Number(value);
+  if (Number.isFinite(numericValue)) {
+    return `${numericValue}${suffix}`;
+  }
+
+  return `${String(value)}${suffix}`;
 }
 
 export default function About() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [aboutContent, setAboutContent] = useState(fallbackAboutContent);
+  const [aboutLoading, setAboutLoading] = useState(true);
+  const [aboutError, setAboutError] = useState<string | null>(null);
+  const [stats, setStats] = useState(fallbackStats);
+  const [statsLoading, setStatsLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
+
+    const loadAboutContent = async () => {
+      try {
+        setAboutLoading(true);
+        setAboutError(null);
+
+        const response = await fetch(`${API_BASE_URL}/about`);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch about content (${response.status})`);
+        }
+
+        const payload = await response.json();
+        const data = payload?.data ?? payload;
+
+        console.log("About page data loaded:", data);
+
+        if (!isMounted) return;
+
+        setAboutContent({
+          title: data?.title || fallbackAboutContent.title,
+          description: data?.description || fallbackAboutContent.description,
+          image: getImageUrl(data?.image),
+        });
+      } catch (err) {
+        console.error("Error fetching about content:", err);
+        if (isMounted) {
+          setAboutError("Unable to load about content.");
+          setAboutContent(fallbackAboutContent);
+        }
+      } finally {
+        if (isMounted) {
+          setAboutLoading(false);
+        }
+      }
+    };
+
+    const loadHomepageStats = async () => {
+      try {
+        setStatsLoading(true);
+
+        const response = await fetch(`${API_BASE_URL}/homepage`);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch homepage stats (${response.status})`);
+        }
+
+        const payload = await response.json();
+        const data = payload?.data ?? payload;
+
+        if (!isMounted) return;
+
+        setStats([
+          { id: "stat-1", value: "50+", label: "Projects Completed" },
+          { id: "stat-2", value: formatStatValue(data?.happyClients, "+"), label: "Happy Clients" },
+          { id: "stat-3", value: formatStatValue(data?.industriesServed, "+"), label: "Industries Served" },
+          { id: "stat-4", value: formatStatValue(data?.yearsExperience, "+"), label: "Years Experience" },
+          { id: "stat-5", value: formatStatValue(data?.clientSatisfaction, "%"), label: "Client Satisfaction" },
+        ]);
+      } catch (err) {
+        console.error("Error fetching homepage stats:", err);
+        if (isMounted) {
+          setStats(fallbackStats);
+        }
+      } finally {
+        if (isMounted) {
+          setStatsLoading(false);
+        }
+      }
+    };
 
     const loadTeamMembers = async () => {
       try {
@@ -74,6 +174,8 @@ export default function About() {
       }
     };
 
+    loadAboutContent();
+    loadHomepageStats();
     loadTeamMembers();
 
     return () => {
@@ -99,8 +201,8 @@ export default function About() {
     <div className="bg-white min-h-screen">
       {/* Page Banner */}
       <PageBanner
-        title="About Our Enterprise"
-        subtitle="Sleek spacing, professional code, and certified machine learning competency."
+        title={aboutLoading ? "Loading..." : aboutContent.title}
+        subtitle={aboutLoading ? "Loading..." : aboutContent.description}
         breadcrumbs={[
           { label: "Home", path: "/" },
           { label: "About" }
@@ -115,12 +217,16 @@ export default function About() {
             <div className="lg:col-span-6 relative">
               <div className="absolute inset-0 bg-red-600 rounded-xl rotate-2 translate-x-2 translate-y-2 opacity-15 blur-sm" />
               <div className="relative rounded-xl overflow-hidden shadow-lg border-4 border-neutral-100 aspect-video">
-                <img
-                  src="https://images.unsplash.com/photo-1542744094-3a31f103e35f?q=80&w=800"
-                  alt="RedFort meeting room"
-                  className="w-full h-full object-cover grayscale"
-                  referrerPolicy="no-referrer"
-                />
+                {aboutLoading ? (
+                  <div className="w-full h-full bg-neutral-200 animate-pulse" />
+                ) : (
+                  <img
+                    src={aboutContent.image}
+                    alt={aboutContent.title}
+                    className="w-full h-full object-cover grayscale"
+                    referrerPolicy="no-referrer"
+                  />
+                )}
               </div>
             </div>
 
@@ -130,7 +236,15 @@ export default function About() {
                 title="Smarter Operations {Built on Trust}"
               />
               <p className="text-neutral-600 text-sm md:text-base leading-relaxed">
-                {companyInfo.detailedDescription}
+                {aboutLoading ? (
+                  <div className="space-y-3">
+                    <div className="h-4 w-full rounded bg-neutral-200 animate-pulse" />
+                    <div className="h-4 w-5/6 rounded bg-neutral-200 animate-pulse" />
+                    <div className="h-4 w-3/4 rounded bg-neutral-200 animate-pulse" />
+                  </div>
+                ) : (
+                   companyInfo.detailedDescription
+                )}
               </p>
               <p className="text-neutral-500 text-sm leading-relaxed">
                 At RedFort AI, we operate with a strict philosophy of zero-leak data security.
@@ -242,7 +356,7 @@ export default function About() {
       </section>
 
       {/* Stats Section */}
-      <StatsSection />
+      <StatsSection stats={stats} />
 
       {/* Leadership */}
       <section className="py-20 md:py-28 bg-white border-b border-neutral-100">
@@ -266,7 +380,7 @@ export default function About() {
           )}
 
           {!loading && !error && teamMembers.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 mt-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mt-16">
               {teamMembers.map((member, idx) => (
                 <motion.div
                   key={member.id}
@@ -414,6 +528,9 @@ export default function About() {
           </div>
         </div>
       </section>
+
+      {/* FAQ Section */}
+      <FAQSection page="About Page" />
 
       {/* CTA Section */}
       <CTA />
