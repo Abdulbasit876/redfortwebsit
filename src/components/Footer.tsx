@@ -111,11 +111,7 @@ export function Footer() {
                   Blog
                 </Link>
               </li>
-              <li>
-                <Link to="/careers" className="text-neutral-400 hover:text-red-600 transition-colors duration-200">
-                  Careers
-                </Link>
-              </li>
+              
               <li>
                 <Link to="/contact" className="text-neutral-400 hover:text-red-600 transition-colors duration-200">
                   Contact
