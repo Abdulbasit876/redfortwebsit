@@ -4,16 +4,7 @@ import { useEffect, useState } from "react";
 import { BlogPost } from "../types";
 import { SectionTitle } from "./SectionTitle";
 import { LucideIcon } from "./LucideIcon";
-
-const IMAGE_BASE_URL = "/api/v1/public";
-
-const getImageUrl = (image?: string) => {
-  if (!image) return "https://via.placeholder.com/800x450?text=No+Image";
-  if (/^https?:\/\//i.test(image)) return image;
-  if (image.startsWith("/api/v1/public")) return image;
-  if (image.startsWith("/")) return `${IMAGE_BASE_URL}${image}`;
-  return `${IMAGE_BASE_URL}/${image}`;
-};
+import { apiUrl, getImageUrl } from "../lib/api";
 
 interface LatestBlogsProps {
   limit?: number;
@@ -26,7 +17,7 @@ export function LatestBlogs({ limit, showTitle = true }: LatestBlogsProps) {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch("/api/v1/public/blogs");
+        const res = await fetch(apiUrl("/blogs"));
         if (!res.ok) {
           console.error("LatestBlogs: fetch failed", res.status);
           setPosts([]);

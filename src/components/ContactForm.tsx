@@ -1,8 +1,8 @@
 import { useState } from "react";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "motion/react";
 import { LucideIcon } from "./LucideIcon";
+import { api } from "../lib/api";
 
 interface ContactFormData {
   name: string;
@@ -24,8 +24,6 @@ export function ContactForm() {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const BASE_URL = "http://localhost:5000/api/v1/public"; // use `/contacts` for submissions
-
   const onSubmit = async (data: ContactFormData) => {
     console.log("Submitting contact form data:", data);
     setIsSubmitting(true);
@@ -39,9 +37,7 @@ export function ContactForm() {
         message: data.message,
       };
 
-      const res = await axios.post(`${BASE_URL}/contacts`, payload, {
-        headers: { "Content-Type": "application/json" },
-      });
+      const res = await api.post("/contacts", payload);
       console.log("Contact submitted:", res);
       setSubmitSuccess(true);
       reset();

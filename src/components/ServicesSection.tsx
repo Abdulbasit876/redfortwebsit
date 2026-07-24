@@ -3,14 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
 import { SectionTitle } from "./SectionTitle";
 import { LucideIcon } from "./LucideIcon";
+import { apiUrl } from "../lib/api";
 import type { Service } from "../types";
 
 interface ServicesSectionProps {
   limit?: number;
   showTitle?: boolean;
 }
-
-const API_BASE_URL = "http://localhost:5000/api/v1/public";
 
 function normalizeService(item: any): Service {
   return {
@@ -61,7 +60,7 @@ export function ServicesSection({ limit, showTitle = true }: ServicesSectionProp
         setLoading(true);
         setError(null);
 
-        const response = await fetch(`${API_BASE_URL}/services`);
+        const response = await fetch(apiUrl("/services"));
         if (!response.ok) {
           throw new Error(`Failed to fetch services (${response.status})`);
         }

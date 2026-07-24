@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FAQSection } from "../components/FAQSection";
 import { LucideIcon } from "../components/LucideIcon";
+import { apiUrl } from "../lib/api";
 import type { Service } from "../types";
-
-const API_BASE_URL = "http://localhost:5000/api/v1/public";
 
 function normalizeService(item: any): Service {
   return {
@@ -38,7 +37,7 @@ export default function ServiceDetailPage() {
         setLoading(true);
         setError(null);
 
-        const response = await fetch(`${API_BASE_URL}/services/${encodeURIComponent(id)}`);
+        const response = await fetch(apiUrl(`/services/${encodeURIComponent(id)}`));
         if (!response.ok) {
           throw new Error(`Failed to fetch service details (${response.status})`);
         }

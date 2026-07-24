@@ -5,17 +5,7 @@ import { BlogPost } from "../types";
 import { PageBanner } from "../components/PageBanner";
 import { SectionTitle } from "../components/SectionTitle";
 import { LucideIcon } from "../components/LucideIcon";
-
-const API_BASE_URL = "/api/v1/public";
-const IMAGE_BASE_URL = "/api/v1/public";
-
-const getImageUrl = (image?: string) => {
-  if (!image) return "https://via.placeholder.com/800x450?text=No+Image";
-  if (/^https?:\/\//i.test(image)) return image;
-  if (image.startsWith("/api/v1/public")) return image;
-  if (image.startsWith("/")) return `${IMAGE_BASE_URL}${image}`;
-  return `${IMAGE_BASE_URL}/${image}`;
-};
+import { apiUrl, getImageUrl } from "../lib/api";
 
 export default function BlogIndex() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -66,7 +56,7 @@ export default function BlogIndex() {
     setLoading(true);
     setError(null);
 
-    fetch(`${API_BASE_URL}/blogs`, { signal: ac.signal })
+    fetch(apiUrl("/blogs"), { signal: ac.signal })
       .then((res) => {
         if (!res.ok) throw new Error(`Failed to load (${res.status})`);
         return res.json();

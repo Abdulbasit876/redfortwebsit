@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { FAQ } from "../types";
 import { SectionTitle } from "./SectionTitle";
 import { LucideIcon } from "./LucideIcon";
+import { apiUrl } from "../lib/api";
 
 interface FAQSectionProps {
   limit?: number;
@@ -24,10 +25,10 @@ export function FAQSection({ limit, page, serviceId }: FAQSectionProps) {
         setError(null);
 
         const url = serviceId
-          ? `http://localhost:5000/api/v1/public/faqs?serviceId=${encodeURIComponent(serviceId)}`
+          ? apiUrl(`/faqs?serviceId=${encodeURIComponent(serviceId)}`)
           : page
-            ? `http://localhost:5000/api/v1/public/faqs?page=${encodeURIComponent(page)}`
-            : "http://localhost:5000/api/v1/public/faqs";
+            ? apiUrl(`/faqs?page=${encodeURIComponent(page)}`)
+            : apiUrl("/faqs");
 
         const response = await fetch(url);
         

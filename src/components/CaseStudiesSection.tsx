@@ -3,21 +3,12 @@ import { useNavigate, Link } from "react-router-dom";
 import { motion } from "motion/react";
 import { SectionTitle } from "./SectionTitle";
 import { LucideIcon } from "./LucideIcon";
+import { apiUrl, getImageUrl } from "../lib/api";
 import type { CaseStudy } from "../types";
 
 interface CaseStudiesSectionProps {
   limit?: number;
   showTitle?: boolean;
-}
-
-const API_BASE_URL = "/api/v1/public";
-
-function getImageUrl(image?: string) {
-  if (!image) return "https://via.placeholder.com/800x450?text=No+Image";
-  if (/^https?:\/\//i.test(image)) return image;
-  if (image.startsWith("/api/v1/public")) return image;
-  if (image.startsWith("/")) return `${API_BASE_URL}${image}`;
-  return `${API_BASE_URL}/${image}`;
 }
 
 export function CaseStudiesSection({ limit, showTitle = true }: CaseStudiesSectionProps) {
@@ -34,7 +25,7 @@ export function CaseStudiesSection({ limit, showTitle = true }: CaseStudiesSecti
         setLoading(true);
         setError(null);
 
-        const response = await fetch(`${API_BASE_URL}/case-studies`);
+        const response = await fetch(apiUrl("/case-studies"));
         if (!response.ok) {
           throw new Error(`Failed to fetch case studies (${response.status})`);
         }

@@ -5,17 +5,7 @@ import { BlogPost } from "../types";
 import { PageBanner } from "../components/PageBanner";
 import { CTA } from "../components/CTA";
 import { LucideIcon } from "../components/LucideIcon";
-
-const API_BASE_URL = "/api/v1/public";
-const IMAGE_BASE_URL = "/api/v1/public";
-
-const getImageUrl = (image?: string) => {
-  if (!image) return "https://via.placeholder.com/1200x600?text=No+Image";
-  if (/^https?:\/\//i.test(image)) return image;
-  if (image.startsWith("/api/v1/public")) return image;
-  if (image.startsWith("/")) return `${IMAGE_BASE_URL}${image}`;
-  return `${IMAGE_BASE_URL}/${image}`;
-};
+import { apiUrl, getImageUrl } from "../lib/api";
 
 export default function BlogDetail() {
   const { slug } = useParams<{ slug: string }>();
@@ -33,7 +23,7 @@ export default function BlogDetail() {
     setLoading(true);
     setError(null);
 
-    fetch(`${API_BASE_URL}/blogs/${slug}`, { signal: ac.signal })
+    fetch(apiUrl(`/blogs/${slug}`), { signal: ac.signal })
       .then((res) => {
         if (!res.ok) throw new Error(`Not found (${res.status})`);
         return res.json();
@@ -81,7 +71,7 @@ export default function BlogDetail() {
   // Fetch list of blogs to show related posts
   useEffect(() => {
     const ac = new AbortController();
-    fetch(`${API_BASE_URL}/blogs`, { signal: ac.signal })
+    fetch(apiUrl("/blogs"), { signal: ac.signal })
       .then((res) => (res.ok ? res.json() : []))
       .then((data: any[]) => {
         const related = (data || [])

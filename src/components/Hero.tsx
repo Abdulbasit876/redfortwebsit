@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import { LucideIcon } from "./LucideIcon";
+import { apiUrl, getImageUrl } from "../lib/api";
 
-const HERO_API_URL = "/api/v1/public/homepage";
-const IMAGE_BASE_URL = "/api/v1/public";
 const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800";
 
 const fallbackHeroContent = {
@@ -17,12 +16,11 @@ const fallbackHeroContent = {
 
 function resolveHeroImage(image?: string) {
   if (!image) return FALLBACK_IMAGE;
+  // Use getImageUrl from centralized config, but handle http replacement
   if (/^https?:\/\//i.test(image)) {
-    return image.replace("http://localhost:5000", "");
+    return image;
   }
-  if (image.startsWith("/uploads/")) return `${IMAGE_BASE_URL}${image}`;
-  if (image.startsWith("/api/v1/public")) return image;
-  return image;
+  return getImageUrl(image);
 }
 
 function normalizeHeroPayload(payload: any) {
@@ -53,7 +51,7 @@ export function Hero() {
     const loadHeroContent = async () => {
       try {
         setLoading(true);
-        const response = await fetch(HERO_API_URL);
+        const response = await fetch(apiUrl("/homepage"));
 
         if (!response.ok) {
           throw new Error(`Failed to fetch hero content (${response.status})`);

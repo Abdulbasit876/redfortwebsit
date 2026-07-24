@@ -7,9 +7,8 @@ import { CTA } from "../components/CTA";
 import { SectionTitle } from "../components/SectionTitle";
 import { LucideIcon } from "../components/LucideIcon";
 import { FAQSection } from "../components/FAQSection";
+import { apiUrl, getImageUrl } from "../lib/api";
 import type { TeamMember } from "../types";
-
-const API_BASE_URL = "/api/v1/public";
 
 const fallbackAboutContent = {
   title: "About Our Enterprise",
@@ -25,13 +24,10 @@ const fallbackStats = [
   { id: "stat-5", value: "98%", label: "Client Satisfaction" },
 ];
 
-function getImageUrl(image?: string) {
+function resolveImageUrl(image?: string) {
   if (!image) return fallbackAboutContent.image;
   if (/^https?:\/\//i.test(image)) return image;
-  if (image.startsWith("/uploads/")) return `${API_BASE_URL}${image}`;
-  if (image.startsWith("/api/v1/public")) return image;
-  if (image.startsWith("/")) return `${API_BASE_URL}${image}`;
-  return `${API_BASE_URL}/${image}`;
+  return getImageUrl(image);
 }
 
 function formatStatValue(value: unknown, suffix: string) {
@@ -63,7 +59,7 @@ export default function About() {
         setAboutLoading(true);
         setAboutError(null);
 
-        const response = await fetch(`${API_BASE_URL}/about`);
+        const response = await fetch(apiUrl("/about"));
         if (!response.ok) {
           throw new Error(`Failed to fetch about content (${response.status})`);
         }
@@ -78,7 +74,7 @@ export default function About() {
         setAboutContent({
           title: data?.title || fallbackAboutContent.title,
           description: data?.description || fallbackAboutContent.description,
-          image: getImageUrl(data?.image),
+          image: resolveImageUrl(data?.image),
         });
       } catch (err) {
         console.error("Error fetching about content:", err);
@@ -97,7 +93,7 @@ export default function About() {
       try {
         setStatsLoading(true);
 
-        const response = await fetch(`${API_BASE_URL}/homepage`);
+        const response = await fetch(apiUrl("/homepage"));
         if (!response.ok) {
           throw new Error(`Failed to fetch homepage stats (${response.status})`);
         }
@@ -131,7 +127,7 @@ export default function About() {
         setLoading(true);
         setError(null);
 
-        const response = await fetch(`${API_BASE_URL}/team`);
+        const response = await fetch(apiUrl("/team"));
         if (!response.ok) {
           throw new Error(`Failed to fetch team members (${response.status})`);
         }
@@ -150,7 +146,7 @@ export default function About() {
             id: item.id || item._id || item.slug || `${item.name || "team"}-${index}`,
             name: item.name || "",
             role: item.role || "",
-            image: getImageUrl(item.image),
+            image: resolveImageUrl(item.image),
             bio: item.description || "",
             social: {
               linkedin: item.linkedinUrl || undefined,

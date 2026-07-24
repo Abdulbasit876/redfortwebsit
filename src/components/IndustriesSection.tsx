@@ -2,17 +2,8 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { SectionTitle } from "./SectionTitle";
 import { LucideIcon } from "./LucideIcon";
+import { apiUrl, getImageUrl } from "../lib/api";
 import type { Industry } from "../types";
-
-const API_BASE_URL = "/api/v1/public";
-
-function getImageUrl(image?: string) {
-  if (!image) return "https://via.placeholder.com/1200x600?text=No+Image";
-  if (/^https?:\/\//i.test(image)) return image;
-  if (image.startsWith("/api/v1/public")) return image;
-  if (image.startsWith("/")) return `${API_BASE_URL}${image}`;
-  return `${API_BASE_URL}/${image}`;
-}
 
 interface IndustriesSectionProps {
   limit?: number;
@@ -32,7 +23,7 @@ export function IndustriesSection({ limit }: IndustriesSectionProps) {
         setLoading(true);
         setError(null);
 
-        const response = await fetch(`${API_BASE_URL}/industries`);
+        const response = await fetch(apiUrl("/industries"));
         if (!response.ok) {
           throw new Error(`Failed to fetch industries (${response.status})`);
         }

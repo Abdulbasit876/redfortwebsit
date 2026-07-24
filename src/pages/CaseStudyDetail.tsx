@@ -3,17 +3,8 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { PageBanner } from "../components/PageBanner";
 import { CTA } from "../components/CTA";
 import { LucideIcon } from "../components/LucideIcon";
+import { apiUrl, getImageUrl } from "../lib/api";
 import type { CaseStudy } from "../types";
-
-const API_BASE_URL = "/api/v1/public";
-
-function getImageUrl(image?: string) {
-  if (!image) return "https://via.placeholder.com/1200x600?text=No+Image";
-  if (/^https?:\/\//i.test(image)) return image;
-  if (image.startsWith("/api/v1/public")) return image;
-  if (image.startsWith("/")) return `${API_BASE_URL}${image}`;
-  return `${API_BASE_URL}/${image}`;
-}
 
 function capitalizeFirstCharacter(text: string) {
   if (!text) return text;
@@ -84,7 +75,7 @@ export default function CaseStudyDetail() {
         setLoading(true);
         setError(null);
 
-        const response = await fetch(`${API_BASE_URL}/case-studies/${id}`);
+        const response = await fetch(apiUrl(`/case-studies/${id}`));
         if (!response.ok) {
           throw new Error(`Failed to fetch case study (${response.status})`);
         }

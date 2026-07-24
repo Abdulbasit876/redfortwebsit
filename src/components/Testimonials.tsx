@@ -3,17 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { Testimonial } from "../types";
 import { SectionTitle } from "./SectionTitle";
 import { LucideIcon } from "./LucideIcon";
-
-const TESTIMONIALS_API_URL = "/api/v1/public/testimonials";
-const IMAGE_BASE_URL = "/api/v1/public";
-
-const getImageUrl = (image?: string) => {
-  if (!image) return "";
-  if (/^https?:\/\//i.test(image)) return image;
-  if (image.startsWith("/api/v1/public")) return image;
-  if (image.startsWith("/")) return `${IMAGE_BASE_URL}${image}`;
-  return `${IMAGE_BASE_URL}/${image}`;
-};
+import { apiUrl, getImageUrl } from "../lib/api";
 
 export function Testimonials() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
@@ -29,7 +19,7 @@ export function Testimonials() {
         setLoading(true);
         setError(null);
 
-        const response = await fetch(TESTIMONIALS_API_URL);
+        const response = await fetch(apiUrl("/testimonials"));
 
         if (!response.ok) {
           throw new Error(`Failed to fetch testimonials (${response.status})`);
