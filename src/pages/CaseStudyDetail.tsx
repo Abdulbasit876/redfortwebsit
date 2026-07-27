@@ -190,7 +190,7 @@ export default function CaseStudyDetail() {
           {/* Left Column: Cover Image & Full Details */}
           <div className="lg:col-span-8 space-y-12">
             {/* Image Showcase */}
-            <div className="h-96 md:h-[480px] rounded-2xl overflow-hidden relative shadow-lg border border-neutral-200">
+            <div data-tilt="standalone" className="h-96 md:h-[480px] rounded-2xl overflow-hidden relative shadow-lg border border-neutral-200">
               <img
                 src={currentCase.image}
                 alt={displayTitle}
@@ -208,6 +208,7 @@ export default function CaseStudyDetail() {
               {/* Problem/Challenge */}
               <div className="space-y-4">
                 <div
+                  data-animate="text"
                   className="prose prose-neutral max-w-none text-neutral-600 text-sm md:text-base leading-relaxed font-body [&_h1]:text-xl [&_h1]:md:text-2xl [&_h1]:font-extrabold [&_h1]:text-black [&_h1]:tracking-tight [&_h1]:flex [&_h1]:items-center [&_h1]:gap-2.5 [&_h1]:mt-8 [&_h1]:mb-4 [&_h1]:before:content-[''] [&_h1]:before:w-1.5 [&_h1]:before:h-6 [&_h1]:before:bg-red-600 [&_h1]:before:block [&_h1]:before:rounded [&_h2]:text-xl [&_h2]:md:text-2xl [&_h2]:font-extrabold [&_h2]:text-black [&_h2]:tracking-tight [&_h2]:flex [&_h2]:items-center [&_h2]:gap-2.5 [&_h2]:mt-8 [&_h2]:mb-4 [&_h2]:before:content-[''] [&_h2]:before:w-1.5 [&_h2]:before:h-6 [&_h2]:before:bg-red-600 [&_h2]:before:block [&_h2]:before:rounded [&_h3]:text-lg [&_h3]:md:text-xl [&_h3]:font-extrabold [&_h3]:text-black [&_h3]:tracking-tight [&_h3]:flex [&_h3]:items-center [&_h3]:gap-2.5 [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:before:content-[''] [&_h3]:before:w-1.5 [&_h3]:before:h-6 [&_h3]:before:bg-red-600 [&_h3]:before:block [&_h3]:before:rounded [&_p]:mb-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:pl-6 [&_li]:mb-2 [&_blockquote]:border-l-4 [&_blockquote]:border-red-600 [&_blockquote]:bg-neutral-50 [&_blockquote]:p-6 [&_blockquote]:rounded-r-lg [&_blockquote]:italic [&_blockquote]:text-neutral-700 [&_img]:w-full [&_img]:h-auto [&_img]:rounded-lg [&_img]:my-6 [&_a]:text-red-600 [&_a]:underline"
                   dangerouslySetInnerHTML={{ __html: formatDisplayHtml(contentHtml) }}
                 />

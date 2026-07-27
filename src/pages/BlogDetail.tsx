@@ -265,7 +265,7 @@ export default function BlogDetail() {
       <article className="py-16 md:py-24 bg-white relative">
         <div className="max-w-4xl mx-auto px-6">
           {/* Article Cover Image */}
-          <div className="aspect-[21/9] rounded-2xl overflow-hidden shadow-lg mb-12 border border-neutral-200">
+          <div data-tilt="standalone" className="aspect-[21/9] rounded-2xl overflow-hidden shadow-lg mb-12 border border-neutral-200">
             <img
               src={currentPost.image}
               alt={currentPost.title}
@@ -372,11 +372,11 @@ export default function BlogDetail() {
             <span className="block text-xs font-body text-red-600 uppercase tracking-widest mb-3 font-semibold">
               RECENT LITERATURE
             </span>
-            <h2 className="text-2xl md:text-3xl font-extrabold text-black font-sans tracking-tight mb-12">
+            <h2 data-animate="heading" className="text-2xl md:text-3xl font-extrabold text-black font-sans tracking-tight mb-12">
               Related Technical Publications
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div data-animate="card" className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {relatedBlogs.map((post) => (
                 <div
                   key={post.id}

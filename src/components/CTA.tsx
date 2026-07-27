@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { motion } from "motion/react";
 
 interface CTAProps {
   title?: string;
@@ -19,22 +18,16 @@ export function CTA({
       <div className="absolute -left-10 top-0 w-80 h-80 bg-white/[0.01] blur-3xl pointer-events-none" />
 
       <div className="max-w-5xl mx-auto px-6 text-center relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="space-y-6"
-        >
+        <div className="space-y-6">
           <span className="text-xs font-body tracking-[0.3em] text-red-600 uppercase font-semibold">
             JOIN REDFORT AI NETWORK
           </span>
           
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-sans font-extrabold tracking-tight leading-tight max-w-3xl mx-auto">
+          <h2 data-animate="heading" className="text-3xl md:text-4xl lg:text-5xl font-sans font-extrabold tracking-tight leading-tight max-w-3xl mx-auto">
             {title}
           </h2>
 
-          <p className="text-neutral-400 text-sm md:text-base max-w-2xl mx-auto leading-relaxed font-body">
+          <p data-animate="text" className="text-neutral-400 text-sm md:text-base max-w-2xl mx-auto leading-relaxed font-body">
             {description}
           </p>
 
@@ -47,7 +40,7 @@ export function CTA({
               <span>→</span>
             </Link>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -108,23 +108,18 @@ export function IndustriesSection({ limit }: IndustriesSectionProps) {
           <div className="text-center py-16 text-sm text-neutral-500">No industries are available at the moment.</div>
         )}
 
-        {!loading && !error && displayedIndustries.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {displayedIndustries.map((ind, idx) => {
-              const isExpanded = expandedId === ind.id;
+          {!loading && !error && displayedIndustries.length > 0 && (
+            <div data-animate="card" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {displayedIndustries.map((ind, idx) => {
+                const isExpanded = expandedId === ind.id;
 
-              return (
-                <motion.div
-                  key={ind.id}
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.5, delay: idx * 0.04 }}
-                  className="bg-white border border-neutral-200 rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group cursor-pointer hover:border-red-600/30"
-                  onClick={() => setExpandedId(isExpanded ? null : ind.id)}
-                  id={`ind-card-${ind.id}`}
-                >
+                return (
+                  <div
+                    key={ind.id}
+                    className="bg-white border border-neutral-200 rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group cursor-pointer hover:border-red-600/30"
+                    onClick={() => setExpandedId(isExpanded ? null : ind.id)}
+                    id={`ind-card-${ind.id}`}
+                  >
                 {/* Image Section */}
                 <div className="h-48 relative overflow-hidden">
                   <img
@@ -185,9 +180,9 @@ export function IndustriesSection({ limit }: IndustriesSectionProps) {
                     </AnimatePresence>
                   </div>
                 </div>
-              </motion.div>
-            );
-          })}
+                </div>
+              );
+            })}
           </div>
         )}
       </div>

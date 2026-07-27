@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "motion/react";
+import { AnimatePresence } from "motion/react";
 import { BlogPost } from "../types";
 import { PageBanner } from "../components/PageBanner";
 import { SectionTitle } from "../components/SectionTitle";
@@ -157,9 +157,7 @@ export default function BlogIndex() {
 
           {/* Featured Post (Only show on page 1 and if no query/filter active) */}
           {currentPage === 1 && searchQuery === "" && selectedCategory === "All" && posts.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
+            <div
               className="bg-neutral-50 border border-neutral-200 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 grid grid-cols-1 lg:grid-cols-12 gap-0 mb-16 group hover:border-red-600/20"
             >
                   <div className="lg:col-span-7 h-80 lg:h-auto overflow-hidden relative">
@@ -212,22 +210,16 @@ export default function BlogIndex() {
                   </span>
                 </div>
               </div>
-            </motion.div>
+            </div>
           )}
 
           {/* Blogs Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <AnimatePresence mode="popLayout">
-              {paginatedBlogs.map((post, idx) => (
-                <motion.article
-                  layout
-                  key={post.id}
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.4, delay: idx * 0.05 }}
-                  className="bg-white rounded-lg border border-neutral-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:border-red-600/20"
-                >
+          <div data-animate="card" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {paginatedBlogs.map((post, idx) => (
+              <article
+                key={post.id}
+                className="bg-white rounded-lg border border-neutral-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:border-red-600/20"
+              >
                   <div className="h-52 overflow-hidden relative">
                     <img
                       src={getImageUrl(post.image)}
@@ -269,9 +261,8 @@ export default function BlogIndex() {
                       </Link>
                     </div>
                   </div>
-                </motion.article>
+                </article>
               ))}
-            </AnimatePresence>
           </div>
 
           {/* Empty Search Fallback */}

@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { BlogPost } from "../types";
 import { SectionTitle } from "./SectionTitle";
@@ -122,14 +121,10 @@ export function LatestBlogs({ limit, showTitle = true }: LatestBlogsProps) {
         )}
 
         {/* Blog Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div data-animate="card" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {displayedBlogs.map((post, idx) => (
-            <motion.article
+            <article
               key={post.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: idx * 0.05 }}
               className="bg-white rounded-lg border border-neutral-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:border-red-600/20"
               id={`blog-post-${post.id}`}
             >
@@ -191,7 +186,7 @@ export function LatestBlogs({ limit, showTitle = true }: LatestBlogsProps) {
                   </div>
                 </div>
               </div>
-            </motion.article>
+            </article>
           ))}
         </div>
 

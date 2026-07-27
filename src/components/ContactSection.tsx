@@ -13,11 +13,11 @@ export function ContactSection() {
             <span className="text-xs font-body tracking-widest text-red-600 uppercase font-semibold">
               SECURE CONSULTATION SCOPING
             </span>
-            <h2 className="text-3xl md:text-4xl font-sans font-extrabold text-black tracking-tight leading-tight">
+            <h2 data-animate="heading" className="text-3xl md:text-4xl font-sans font-extrabold text-black tracking-tight leading-tight">
               Initiate Your <br />
               <span className="text-red-600">Enterprise AI</span> Pipeline
             </h2>
-            <p className="text-neutral-500 text-sm leading-relaxed font-body">
+            <p data-animate="text" className="text-neutral-500 text-sm leading-relaxed font-body">
               Our solutions team reviews incoming requirements securely. Connect with us to establish
               a direct Slack channel, map budget parameters, and review code compliance matrices.
             </p>

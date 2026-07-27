@@ -39,7 +39,7 @@ export function Footer() {
               />
             </Link>
             
-            <p className="text-neutral-500 text-sm leading-relaxed max-w-sm font-sans">
+            <p data-animate="text" className="text-neutral-500 text-sm leading-relaxed max-w-sm font-sans">
               {companyInfo.description}
             </p>
 
@@ -76,7 +76,7 @@ export function Footer() {
           </div>
 
           {/* Column 2: Quick Links */}
-          <div className="lg:col-span-2 space-y-4">
+          <div data-animate="text" className="lg:col-span-2 space-y-4">
             <h4 className="text-xs font-sans uppercase tracking-[0.2em] text-red-600 font-bold">
               Quick Links
             </h4>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { AnimatePresence } from "motion/react";
 import { Testimonial } from "../types";
 import { SectionTitle } from "./SectionTitle";
 import { LucideIcon } from "./LucideIcon";
@@ -129,12 +129,8 @@ export function Testimonials() {
 
           {showCarousel && (
             <AnimatePresence mode="wait">
-              <motion.div
+              <div
                 key={currentIndex}
-                initial={{ opacity: 0, scale: 0.98, y: 10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.98, y: -10 }}
-                transition={{ duration: 0.4 }}
                 className="w-full text-center"
                 id={`testimonial-${current.id}`}
               >
@@ -172,7 +168,7 @@ export function Testimonials() {
                     {current.role}, {current.company}
                   </span>
                 </div>
-              </motion.div>
+              </div>
             </AnimatePresence>
           )}
         </div>

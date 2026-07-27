@@ -54,14 +54,14 @@ export default function Contact() {
                   subtitle="Get In Touch"
                   title="Initiate {Scoping Sprints}"
                 />
-                <p className="text-neutral-550 text-sm leading-relaxed font-sans">
+                <p data-animate="text" className="text-neutral-550 text-sm leading-relaxed font-sans">
                   Connect with our Tx-certified solutions group. Complete the secure requisition form,
                   or transmit directly over encrypted secure mail channels.
                 </p>
               </div>
 
               {/* Vertical Info cards */}
-              <div className="space-y-6">
+              <div data-animate="card" className="space-y-6">
                 {contactDetails.map((det, idx) => (
                   <div
                     key={idx}
@@ -119,7 +119,7 @@ export default function Contact() {
           <span className="block text-[10px] font-mono text-neutral-450 uppercase tracking-widest font-semibold mb-4 text-center">
             HEADQUARTERS COORDINATES
           </span>
-          <div className="w-full h-80 rounded-2xl bg-black relative border-4 border-neutral-900 shadow-xl overflow-hidden flex flex-col items-center justify-center">
+          <div data-tilt="standalone" className="w-full h-80 rounded-2xl bg-black relative border-4 border-neutral-900 shadow-xl overflow-hidden flex flex-col items-center justify-center">
             {/* Atmospheric technical grid */}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(220,38,38,0.1),transparent_70%)] pointer-events-none" />

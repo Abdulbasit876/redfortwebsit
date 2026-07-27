@@ -22,10 +22,10 @@ export default function CaseStudiesPage() {
           <span className="text-xs font-body tracking-widest text-red-600 uppercase font-semibold mb-3 block">
             QUANTIFIED VERIFIED IMPACT
           </span>
-          <h2 className="text-3xl md:text-4xl font-sans font-extrabold text-black tracking-tight mb-6">
+          <h2 data-animate="heading" className="text-3xl md:text-4xl font-sans font-extrabold text-black tracking-tight mb-6">
             We Build Software That Drives Metrics
           </h2>
-          <p className="text-neutral-500 text-sm md:text-base leading-relaxed font-body">
+          <p data-animate="text" className="text-neutral-500 text-sm md:text-base leading-relaxed font-body">
             A beautiful user interface is only valuable if it performs. Our engineering audits
             always target tangible, quantifiable business outcomes: fuel reductions, conversion uplifts,
             decreased triage bottlenecks, and lower server bills. Explore our 8 detailed cases below.

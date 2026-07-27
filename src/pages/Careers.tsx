@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { PageBanner } from "../components/PageBanner";
 import { SectionTitle } from "../components/SectionTitle";
@@ -194,19 +194,19 @@ export default function CareersPage() {
                 subtitle="Why RedFort AI"
                 title="A Culture of {Extreme Craftsmanship}"
               />
-              <p className="text-neutral-500 text-sm md:text-base leading-relaxed font-body">
+              <p data-animate="text" className="text-neutral-500 text-sm md:text-base leading-relaxed font-body">
                 At RedFort AI, we operate with a philosophy of absolute technical excellence. 
                 We skip bloated meetings and corporate jargon to focus on what truly matters: 
                 writing pristine code, resolving scaling limits, and researching cutting-edge cognitive systems.
               </p>
-              <p className="text-neutral-500 text-sm md:text-base leading-relaxed font-body">
+              <p data-animate="text" className="text-neutral-500 text-sm md:text-base leading-relaxed font-body">
                 We believe that premium quality is built by talented, autonomous individuals who are 
                 fully supported. We offer spacious hybrid pacing, robust healthcare, and dedicated study sprints 
                 to keep you ahead of the technical curve.
               </p>
             </div>
 
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div data-animate="card" className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
               {[
                 {
                   icon: "Cpu",
@@ -293,9 +293,8 @@ export default function CareersPage() {
               filteredJobs.map((job) => {
                 const isExpanded = expandedRole === job.id;
                 return (
-                  <motion.div
+                  <div
                     key={job.id}
-                    layout
                     className={`bg-white border transition-all duration-300 rounded-xl overflow-hidden ${
                       isExpanded ? "border-red-600 shadow-md shadow-red-600/5" : "border-neutral-200 hover:border-neutral-300 hover:shadow-sm"
                     }`}
@@ -421,7 +420,7 @@ export default function CareersPage() {
                         </motion.div>
                       )}
                     </AnimatePresence>
-                  </motion.div>
+                  </div>
                 );
               })
             )}

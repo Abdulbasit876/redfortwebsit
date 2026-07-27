@@ -1,6 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Navbar } from "./components/Navbar";
+import { Preloader } from "./components/Preloader";
+import { useCustomCursor } from "./hooks/useCustomCursor";
+import { useLenis } from "./hooks/useLenis";
+import { useScrollAnimations } from "./hooks/useScrollAnimations";
 import { Footer } from "./components/Footer";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -15,6 +19,10 @@ import Contact from "./pages/Contact";
 import Careers from "./pages/Careers";
 import NotFound from "./pages/NotFound";
 
+// Module-level flag: tracks if this is the first ever mount (full page load)
+// vs a subsequent SPA route navigation
+let isFirstMount = true;
+
 // ScrollToTop component forces window to reset scroll positions on navigation
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -26,10 +34,31 @@ function ScrollToTop() {
   return null;
 }
 
-export default function App() {
+function AppContent() {
+  const [preloaderDone, setPreloaderDone] = useState(!isFirstMount);
+
+  useEffect(() => {
+    // After first mount, mark that preloader has been shown
+    isFirstMount = false;
+  }, []);
+
+  const handlePreloaderComplete = useCallback(() => {
+    console.log("[App] Loading state changed: preloaderDone = true");
+    setPreloaderDone(true);
+  }, []);
+
+  // Initialize custom cursor globally (visible on every page)
+  useCustomCursor();
+
+  // Initialize Lenis smooth scrolling globally (works on every page)
+  useLenis();
+
+  // Initialize global scroll animations (headings, text, cards, buttons)
+  useScrollAnimations();
+
   return (
-    <Router>
-      <ScrollToTop />
+    <>
+      {!preloaderDone && <Preloader onComplete={handlePreloaderComplete} />}
       <div className="flex flex-col min-h-screen bg-white text-black selection:bg-red-600 selection:text-white">
         {/* Sticky Header Nav */}
         <Navbar />
@@ -55,6 +84,15 @@ export default function App() {
         {/* Global Footer Grid */}
         <Footer />
       </div>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <Router>
+      <ScrollToTop />
+      <AppContent />
     </Router>
   );
 }

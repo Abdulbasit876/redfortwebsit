@@ -12,7 +12,7 @@ import { ContactSection } from "../components/ContactSection";
 export default function Home() {
   return (
     <div className="bg-white min-h-screen">
-      {/* 1. Hero Section (Keep Existing Design) */}
+      {/* 1. Hero Section */}
       <Hero />
 
       {/* 2. About Section */}

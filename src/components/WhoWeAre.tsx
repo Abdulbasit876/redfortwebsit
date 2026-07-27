@@ -1,4 +1,3 @@
-import { motion } from "motion/react";
 import { SectionTitle } from "./SectionTitle";
 import { LucideIcon } from "./LucideIcon";
 
@@ -33,7 +32,7 @@ export function WhoWeAre() {
               title="We Are {RedFort AI}"
             />
             
-            <p className="text-neutral-700 text-lg mb-8 leading-relaxed font-body">
+            <p data-animate="text" className="text-neutral-700 text-lg mb-8 leading-relaxed font-body">
               We are a premium technology and software engineering company focused on delivering
               high-quality digital products and autonomous artificial intelligence. Our mission is to
               transform complex business challenges into powerful, elegant solutions that drive immediate,
@@ -43,12 +42,8 @@ export function WhoWeAre() {
             {/* Core Values Rows */}
             <div className="space-y-6">
               {values.map((val, idx) => (
-                <motion.div
+                <div
                   key={idx}
-                  initial={{ opacity: 0, x: -15 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
                   className="flex items-start space-x-4 p-4 rounded-lg hover:bg-neutral-50 border border-transparent hover:border-neutral-200 transition-all duration-300 group"
                 >
                   <div className="p-3 bg-neutral-100 rounded text-red-600 group-hover:bg-red-600 group-hover:text-white transition-colors duration-300">
@@ -62,7 +57,7 @@ export function WhoWeAre() {
                       {val.description}
                     </p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -71,11 +66,7 @@ export function WhoWeAre() {
           <div className="lg:col-span-5 relative">
             <div className="absolute inset-0 bg-red-600 rounded-2xl rotate-3 translate-x-3 translate-y-3 opacity-20 blur-sm -z-10" />
             
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+            <div
               className="relative rounded-2xl overflow-hidden border-8 border-neutral-100 shadow-xl aspect-square"
             >
               <img
@@ -84,7 +75,7 @@ export function WhoWeAre() {
                 className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 hover:scale-105"
                 referrerPolicy="no-referrer"
               />
-            </motion.div>
+            </div>
           </div>
 
         </div>

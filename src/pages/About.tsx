@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { motion } from "motion/react";
 import { companyInfo } from "../data/company";
 import { PageBanner } from "../components/PageBanner";
 import { StatsSection } from "../components/StatsSection";
@@ -212,7 +211,7 @@ export default function About() {
             
             <div className="lg:col-span-6 relative">
               <div className="absolute inset-0 bg-red-600 rounded-xl rotate-2 translate-x-2 translate-y-2 opacity-15 blur-sm" />
-              <div className="relative rounded-xl overflow-hidden shadow-lg border-4 border-neutral-100 aspect-video">
+              <div data-tilt="standalone" className="relative rounded-xl overflow-hidden shadow-lg border-4 border-neutral-100 aspect-video">
                 {aboutLoading ? (
                   <div className="w-full h-full bg-neutral-200 animate-pulse" />
                 ) : (
@@ -231,7 +230,7 @@ export default function About() {
                 subtitle="Our Story"
                 title="Smarter Operations {Built on Trust}"
               />
-              <p className="text-neutral-600 text-sm md:text-base leading-relaxed">
+              <div data-animate="text" className="text-neutral-600 text-sm md:text-base leading-relaxed">
                 {aboutLoading ? (
                   <div className="space-y-3">
                     <div className="h-4 w-full rounded bg-neutral-200 animate-pulse" />
@@ -241,8 +240,8 @@ export default function About() {
                 ) : (
                    companyInfo.detailedDescription
                 )}
-              </p>
-              <p className="text-neutral-500 text-sm leading-relaxed">
+              </div>
+              <p data-animate="text" className="text-neutral-500 text-sm leading-relaxed">
                 At RedFort AI, we operate with a strict philosophy of zero-leak data security.
                 We specialize in deploying local models that keep your financial and patient data private,
                 protecting your core enterprise asset: proprietary insights.
@@ -259,10 +258,7 @@ export default function About() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             
             {/* Mission */}
-            <motion.div
-              initial={{ opacity: 0, x: -15 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+            <div
               className="bg-white border border-neutral-200 rounded-xl p-8 shadow-sm flex flex-col justify-between group hover:border-red-600/20 transition-all duration-300"
             >
               <div>
@@ -278,13 +274,10 @@ export default function About() {
                 </p>
               </div>
               <span className="text-[10px] font-body text-neutral-400 mt-8 block">MISSION STATUTORY DEFIANCE</span>
-            </motion.div>
+            </div>
 
             {/* Vision */}
-            <motion.div
-              initial={{ opacity: 0, x: 15 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+            <div
               className="bg-white border border-neutral-200 rounded-xl p-8 shadow-sm flex flex-col justify-between group hover:border-red-600/20 transition-all duration-300"
             >
               <div>
@@ -300,7 +293,7 @@ export default function About() {
                 </p>
               </div>
               <span className="text-[10px] font-body text-neutral-400 mt-8 block">VISIONARY HORIZONS VECTOR</span>
-            </motion.div>
+            </div>
 
           </div>
         </div>
@@ -317,12 +310,8 @@ export default function About() {
 
           <div className="relative border-l border-neutral-200 ml-4 md:ml-32 mt-16 space-y-12">
             {timelineSteps.map((step, idx) => (
-              <motion.div
+              <div
                 key={idx}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.5, delay: idx * 0.05 }}
                 className="relative pl-8 md:pl-12 group"
               >
                 {/* Floating Year marker for desktop */}
@@ -345,7 +334,7 @@ export default function About() {
                     {step.desc}
                   </p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -376,14 +365,10 @@ export default function About() {
           )}
 
           {!loading && !error && teamMembers.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mt-16">
+            <div data-animate="card" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mt-16">
               {teamMembers.map((member, idx) => (
-                <motion.div
+                <div
                   key={member.id}
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.05 }}
                   className="bg-neutral-50 rounded-xl overflow-hidden border border-neutral-200 hover:border-red-600/20 shadow-sm flex flex-col justify-between group w-[calc(100%+20px)]"
                   id={`team-member-${member.id}`}
                 >
@@ -437,7 +422,7 @@ export default function About() {
                       </div>
                     )}
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           )}
@@ -480,7 +465,7 @@ export default function About() {
 
             <div className="lg:col-span-6 relative">
               <div className="absolute inset-0 bg-red-600 rounded-xl rotate-1 translate-x-1 translate-y-1 opacity-10 blur-sm" />
-              <div className="relative rounded-xl overflow-hidden border border-neutral-200 aspect-video">
+              <div data-tilt="standalone" className="relative rounded-xl overflow-hidden border border-neutral-200 aspect-video">
                 <img
                   src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800"
                   alt="RedFort AI culture"
@@ -503,14 +488,10 @@ export default function About() {
             centered
           />
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
+          <div data-animate="card" className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
             {galleryImages.map((imgUrl, gIdx) => (
-              <motion.div
+              <div
                 key={gIdx}
-                initial={{ opacity: 0, scale: 0.98 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: gIdx * 0.05 }}
                 className="aspect-square rounded-xl overflow-hidden border border-neutral-200 shadow-sm relative group"
               >
                 <img
@@ -519,7 +500,7 @@ export default function About() {
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
                   referrerPolicy="no-referrer"
                 />
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

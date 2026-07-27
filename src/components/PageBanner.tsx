@@ -44,12 +44,12 @@ export function PageBanner({ title, subtitle, breadcrumbs }: PageBannerProps) {
             ))}
           </nav>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-sans font-extrabold tracking-tight mb-4">
+          <h1 data-animate="heading" className="text-4xl md:text-5xl lg:text-6xl font-sans font-extrabold tracking-tight mb-4">
             {title}
           </h1>
 
           {subtitle && (
-            <p className="text-neutral-400 text-lg md:text-xl max-w-2xl font-sans font-normal leading-relaxed">
+            <p data-animate="text" className="text-neutral-400 text-lg md:text-xl max-w-2xl font-sans font-normal leading-relaxed">
               {subtitle}
             </p>
           )}

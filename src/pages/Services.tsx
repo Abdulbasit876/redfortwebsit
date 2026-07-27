@@ -1,4 +1,3 @@
-import { motion } from "motion/react";
 import { PageBanner } from "../components/PageBanner";
 import { ServicesSection } from "../components/ServicesSection";
 import { CTA } from "../components/CTA";
@@ -91,14 +90,10 @@ export default function ServicesPage() {
             light
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+          <div data-animate="card" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
             {techStackCategories.map((cat, idx) => (
-              <motion.div
+              <div
                 key={idx}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: idx * 0.05 }}
                 className="bg-neutral-950 border border-neutral-900 rounded-lg p-6 hover:border-red-600/30 transition-all duration-300"
               >
                 <h4 className="text-sm font-body uppercase tracking-widest text-red-600 mb-4 font-bold">
@@ -114,7 +109,7 @@ export default function ServicesPage() {
                     </span>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -129,14 +124,10 @@ export default function ServicesPage() {
             centered
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16 relative">
+          <div data-animate="card" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16 relative">
             {processSteps.map((step, idx) => (
-              <motion.div
+              <div
                 key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.05 }}
                 className="relative bg-neutral-50 rounded p-6 border border-neutral-200 hover:border-red-600/30 transition-all duration-300 group"
               >
                 <span className="block text-4xl font-sans font-black text-red-600/20 group-hover:text-red-600 transition-colors duration-300 mb-4">
@@ -148,7 +139,7 @@ export default function ServicesPage() {
                 <p className="text-neutral-550 text-xs leading-relaxed font-sans">
                   {step.desc}
                 </p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

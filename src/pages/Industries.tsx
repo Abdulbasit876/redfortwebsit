@@ -23,10 +23,10 @@ export default function IndustriesPage() {
           <span className="text-xs font-body tracking-widest text-red-600 uppercase font-semibold mb-3 block">
             SPECIALIZED VERTICAL INTEGRITY
           </span>
-          <h2 className="text-3xl md:text-4xl font-sans font-extrabold text-black tracking-tight mb-6">
+          <h2 data-animate="heading" className="text-3xl md:text-4xl font-sans font-extrabold text-black tracking-tight mb-6">
             Engineered Compliance for {"{Diverse Sectors}"}
           </h2>
-          <p className="text-neutral-500 text-sm md:text-base leading-relaxed font-body">
+          <p data-animate="text" className="text-neutral-500 text-sm md:text-base leading-relaxed font-body">
             Every sector operates under specific system constraints: HIPAA in healthcare, SOC2 in FinTech,
             PCI-DSS in retail checkout lines. At RedFort AI, our developers are fully trained in sector-specific
             regulations, shipping code that is safe, fast, and compliant by default.

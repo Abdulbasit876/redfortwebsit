@@ -104,7 +104,7 @@ export function ServicesSection({ limit, showTitle = true }: ServicesSectionProp
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div data-animate="card" className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {loading && (
             <div className="md:col-span-2 flex flex-col items-center justify-center py-16">
               <div className="w-8 h-8 border-4 border-neutral-200 border-t-red-600 rounded-full animate-spin" />
@@ -128,12 +128,8 @@ export function ServicesSection({ limit, showTitle = true }: ServicesSectionProp
             const preview = getDescriptionPreview(srv.description);
 
             return (
-              <motion.div
+              <div
                 key={srv.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: idx * 0.05 }}
                 className="bg-white rounded-lg p-8 border border-neutral-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group cursor-pointer hover:border-red-600/30"
                 id={`srv-card-${srv.id}`}
                 onClick={() => navigate(`/services/${srv.slug || srv.id}`)}
@@ -169,7 +165,7 @@ export function ServicesSection({ limit, showTitle = true }: ServicesSectionProp
                   <span>LEARN MORE</span>
                   <span>→</span>
                 </Link>
-              </motion.div>
+              </div>
             );
           })}
         </div>

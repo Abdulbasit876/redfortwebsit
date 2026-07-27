@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { motion } from "motion/react";
 import { SectionTitle } from "./SectionTitle";
 import { LucideIcon } from "./LucideIcon";
 import { apiUrl, getImageUrl } from "../lib/api";
@@ -105,14 +104,10 @@ export function CaseStudiesSection({ limit, showTitle = true }: CaseStudiesSecti
           <div className="text-center py-16 text-sm text-neutral-500">No case studies available at the moment.</div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div data-animate="card" className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {!loading && !error && displayedCases.map((cs, idx) => (
-            <motion.div
+            <div
               key={cs.id}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: idx * 0.05 }}
               className="bg-white border border-neutral-200 rounded-xl overflow-hidden group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:border-red-600/30"
               onClick={() => navigate(`/case-studies/${cs.id}`)}
               id={`cs-card-${cs.id}`}
@@ -147,7 +142,7 @@ export function CaseStudiesSection({ limit, showTitle = true }: CaseStudiesSecti
                   <LucideIcon name="ArrowUpRight" className="w-4 h-4" />
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 

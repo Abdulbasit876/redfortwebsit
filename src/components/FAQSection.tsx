@@ -125,12 +125,8 @@ export function FAQSection({ limit, page, serviceId }: FAQSectionProps) {
             const isOpen = openId === faq.id;
 
             return (
-              <motion.div
+              <div
                 key={faq.id}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.4, delay: idx * 0.05 }}
                 className="bg-white border border-neutral-200 rounded-lg overflow-hidden transition-colors duration-300 hover:border-red-600/20 shadow-sm"
               >
                 <button
@@ -161,7 +157,7 @@ export function FAQSection({ limit, page, serviceId }: FAQSectionProps) {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </motion.div>
+              </div>
             );
           })}
 

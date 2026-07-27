@@ -80,7 +80,7 @@ export default function ServiceDetailPage() {
                 <LucideIcon name={service?.icon || "Circle"} className="w-6 h-6" />
               )}
             </div>
-            <h1 className="text-2xl font-bold text-black font-sans">
+            <h1 data-animate="heading" className="text-2xl font-bold text-black font-sans">
               {loading ? "Loading service details" : service?.title || "Service details"}
             </h1>
           </div>
@@ -97,6 +97,7 @@ export default function ServiceDetailPage() {
 
           {!loading && !error && service?.description && (
             <div
+              data-animate="text"
               className="prose prose-sm md:prose-base max-w-none prose-headings:font-sans prose-p:text-neutral-700 prose-a:text-red-600 prose-li:text-neutral-700"
               dangerouslySetInnerHTML={{ __html: service.description }}
             />

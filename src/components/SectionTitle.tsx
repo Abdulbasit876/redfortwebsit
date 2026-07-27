@@ -34,6 +34,7 @@ export function SectionTitle({ title, subtitle, centered = false, light = false,
         </span>
       )}
       <h2
+        data-animate="heading"
         className={`text-3xl md:text-4xl lg:text-5xl font-sans font-extrabold tracking-tight leading-tight ${
           light ? "text-white" : "text-black"
         }`}
