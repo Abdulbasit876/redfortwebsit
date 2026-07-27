@@ -64,7 +64,7 @@ export function setupCardReveals(container: HTMLElement | Document = document) {
     gsap.timeline({
       scrollTrigger: {
         trigger: cardContainer,
-        start: "top 90%",
+        start: "top bottom",
         end: "bottom top",
         toggleActions: "play reverse play reverse",
       },

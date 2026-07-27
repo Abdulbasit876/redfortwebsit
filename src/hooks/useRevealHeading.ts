@@ -41,7 +41,7 @@ export function setupHeadingReveals(container: HTMLElement | Document = document
       gsap.timeline({
         scrollTrigger: {
           trigger: heading,
-          start: "top 90%",
+          start: "top bottom",
           end: "bottom top",
           toggleActions: "play reverse play reverse",
         },
@@ -64,7 +64,7 @@ export function setupHeadingReveals(container: HTMLElement | Document = document
       gsap.timeline({
         scrollTrigger: {
           trigger: heading,
-          start: "top 90%",
+          start: "top bottom",
           end: "bottom top",
           toggleActions: "play reverse play reverse",
         },
@@ -100,7 +100,7 @@ export function setupHeadingReveals(container: HTMLElement | Document = document
     gsap.timeline({
       scrollTrigger: {
         trigger: heading,
-        start: "top 90%",
+        start: "top bottom",
         end: "bottom top",
         toggleActions: "play reverse play reverse",
       },

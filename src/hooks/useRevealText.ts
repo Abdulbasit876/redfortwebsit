@@ -40,7 +40,7 @@ export function setupTextReveals(container: HTMLElement | Document = document) {
     gsap.timeline({
       scrollTrigger: {
         trigger: el,
-        start: "top 90%",
+        start: "top bottom",
         end: "bottom top",
         toggleActions: "play reverse play reverse",
       },

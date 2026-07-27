@@ -53,7 +53,7 @@ export function useScrollAnimations() {
         gsap.timeline({
           scrollTrigger: {
             trigger: btn,
-            start: "top 90%",
+            start: "top bottom",
             end: "bottom top",
             toggleActions: "play reverse play reverse",
           },

@@ -43,6 +43,9 @@ export function setupCardHovers(container: HTMLElement | Document = document) {
       card.style.transformStyle = "preserve-3d";
       gsap.set(card, { transformPerspective: 1000, transformOrigin: "center center" });
 
+      // Elements that might contain CSS transitions (disable them temporarily during hover)
+      const elementsToDisableTransition = [card, img, icon, badge, button].filter(Boolean) as HTMLElement[];
+
       // ── quickTo setters — configured with smooth inertia (duration: 0.5) like Hero image tilt ──
       const qCard = {
         rotX: gsap.quickTo(card, "rotateX", { duration: 0.5, ease: "power2.out", force3D: true, overwrite: "auto" }),
@@ -77,6 +80,12 @@ export function setupCardHovers(container: HTMLElement | Document = document) {
 
       const handleMouseEnter = () => {
         rect = card.getBoundingClientRect();
+        
+        // Temporarily disable CSS transition property so GSAP can animate instantly and smoothly
+        elementsToDisableTransition.forEach((el) => {
+          el.style.transition = "none";
+        });
+
         // Smoothly fade premium shadow in
         gsap.to(card, {
           boxShadow: "0 25px 50px -12px rgba(222, 24, 27, 0.18), 0 12px 24px -6px rgba(0, 0, 0, 0.12)",
@@ -129,6 +138,12 @@ export function setupCardHovers(container: HTMLElement | Document = document) {
           ease: "power3.out",
           force3D: true,
           overwrite: "auto",
+          onComplete: () => {
+            // Restore normal CSS transitions when animation settles
+            elementsToDisableTransition.forEach((el) => {
+              el.style.transition = "";
+            });
+          }
         });
 
         if (img) gsap.to(img, { x: 0, y: 0, scale: 1, duration: 0.6, ease: "power3.out", force3D: true, overwrite: "auto" });
