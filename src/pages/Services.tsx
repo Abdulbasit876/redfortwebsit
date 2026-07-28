@@ -3,6 +3,7 @@ import { ServicesSection } from "../components/ServicesSection";
 import { CTA } from "../components/CTA";
 import { SectionTitle } from "../components/SectionTitle";
 import { LucideIcon } from "../components/LucideIcon";
+import { MotionCard } from "../components/MotionCard";
 
 export default function ServicesPage() {
   const processSteps = [
@@ -90,11 +91,13 @@ export default function ServicesPage() {
             light
           />
 
-          <div data-animate="card" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
             {techStackCategories.map((cat, idx) => (
-              <div
+              <MotionCard
                 key={idx}
-                className="bg-neutral-950 border border-neutral-900 rounded-lg p-6 hover:border-red-600/30 transition-all duration-300"
+                className="bg-neutral-950 border border-neutral-900 rounded-lg p-6 transition-all duration-300"
+                data-aos="fade-up"
+                data-aos-delay={idx * 80}
               >
                 <h4 className="text-sm font-body uppercase tracking-widest text-red-600 mb-4 font-bold">
                   {cat.title}
@@ -109,7 +112,7 @@ export default function ServicesPage() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </MotionCard>
             ))}
           </div>
         </div>
@@ -124,11 +127,13 @@ export default function ServicesPage() {
             centered
           />
 
-          <div data-animate="card" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16 relative">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16 relative">
             {processSteps.map((step, idx) => (
-              <div
+              <MotionCard
                 key={idx}
-                className="relative bg-neutral-50 rounded p-6 border border-neutral-200 hover:border-red-600/30 transition-all duration-300 group"
+                className="relative bg-neutral-50 rounded p-6 border border-neutral-200 transition-all duration-300 group"
+                data-aos="fade-up"
+                data-aos-delay={idx * 80}
               >
                 <span className="block text-4xl font-sans font-black text-red-600/20 group-hover:text-red-600 transition-colors duration-300 mb-4">
                   {step.num}
@@ -139,7 +144,7 @@ export default function ServicesPage() {
                 <p className="text-neutral-550 text-xs leading-relaxed font-sans">
                   {step.desc}
                 </p>
-              </div>
+              </MotionCard>
             ))}
           </div>
         </div>

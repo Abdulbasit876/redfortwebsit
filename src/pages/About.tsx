@@ -6,6 +6,8 @@ import { CTA } from "../components/CTA";
 import { SectionTitle } from "../components/SectionTitle";
 import { LucideIcon } from "../components/LucideIcon";
 import { FAQSection } from "../components/FAQSection";
+import { MotionTilt } from "../components/MotionTilt";
+import { MotionCard } from "../components/MotionCard";
 import { apiUrl, getImageUrl } from "../lib/api";
 import type { TeamMember } from "../types";
 
@@ -211,7 +213,7 @@ export default function About() {
             
             <div className="lg:col-span-6 relative">
               <div className="absolute inset-0 bg-red-600 rounded-xl rotate-2 translate-x-2 translate-y-2 opacity-15 blur-sm" />
-              <div data-tilt="standalone" className="relative rounded-xl overflow-hidden shadow-lg border-4 border-neutral-100 aspect-video">
+              <MotionTilt className="relative rounded-xl overflow-hidden shadow-lg border-4 border-neutral-100 aspect-video">
                 {aboutLoading ? (
                   <div className="w-full h-full bg-neutral-200 animate-pulse" />
                 ) : (
@@ -222,7 +224,7 @@ export default function About() {
                     referrerPolicy="no-referrer"
                   />
                 )}
-              </div>
+              </MotionTilt>
             </div>
 
             <div className="lg:col-span-6 space-y-6">
@@ -365,11 +367,13 @@ export default function About() {
           )}
 
           {!loading && !error && teamMembers.length > 0 && (
-            <div data-animate="card" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mt-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mt-16">
               {teamMembers.map((member, idx) => (
-                <div
+                <MotionCard
                   key={member.id}
-                  className="bg-neutral-50 rounded-xl overflow-hidden border border-neutral-200 hover:border-red-600/20 shadow-sm flex flex-col justify-between group w-[calc(100%+20px)]"
+                  className="bg-neutral-50 rounded-xl overflow-hidden border border-neutral-200 shadow-sm flex flex-col justify-between group"
+                  data-aos="fade-up"
+                  data-aos-delay={idx * 80}
                   id={`team-member-${member.id}`}
                 >
                   {/* Avatar */}
@@ -422,7 +426,7 @@ export default function About() {
                       </div>
                     )}
                   </div>
-                </div>
+                </MotionCard>
               ))}
             </div>
           )}
@@ -465,14 +469,14 @@ export default function About() {
 
             <div className="lg:col-span-6 relative">
               <div className="absolute inset-0 bg-red-600 rounded-xl rotate-1 translate-x-1 translate-y-1 opacity-10 blur-sm" />
-              <div data-tilt="standalone" className="relative rounded-xl overflow-hidden border border-neutral-200 aspect-video">
+              <MotionTilt className="relative rounded-xl overflow-hidden border border-neutral-200 aspect-video">
                 <img
                   src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800"
                   alt="RedFort AI culture"
                   className="w-full h-full object-cover grayscale"
                   referrerPolicy="no-referrer"
                 />
-              </div>
+              </MotionTilt>
             </div>
 
           </div>
@@ -488,11 +492,13 @@ export default function About() {
             centered
           />
 
-          <div data-animate="card" className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
             {galleryImages.map((imgUrl, gIdx) => (
-              <div
+              <MotionCard
                 key={gIdx}
                 className="aspect-square rounded-xl overflow-hidden border border-neutral-200 shadow-sm relative group"
+                data-aos="fade-up"
+                data-aos-delay={gIdx * 80}
               >
                 <img
                   src={imgUrl}
@@ -500,7 +506,7 @@ export default function About() {
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
                   referrerPolicy="no-referrer"
                 />
-              </div>
+              </MotionCard>
             ))}
           </div>
         </div>

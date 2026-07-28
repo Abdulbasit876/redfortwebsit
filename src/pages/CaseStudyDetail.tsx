@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import AOS from "aos";
 import { PageBanner } from "../components/PageBanner";
 import { CTA } from "../components/CTA";
 import { LucideIcon } from "../components/LucideIcon";
+import { MotionTilt } from "../components/MotionTilt";
 import { apiUrl, getImageUrl } from "../lib/api";
 import type { CaseStudy } from "../types";
 
@@ -120,6 +122,36 @@ export default function CaseStudyDetail() {
     };
   }, [id]);
 
+  // Apply AOS animations to dynamically loaded content
+  useEffect(() => {
+    if (!contentHtml) return;
+    const timer = setTimeout(() => {
+      // Animate headings and paragraphs inside the content div
+      const container = document.querySelector('[data-animate="text"]');
+      if (container) {
+        container.querySelectorAll("h1, h2, h3, h4").forEach((el) => {
+          const htmlEl = el as HTMLElement;
+          if (htmlEl.dataset.aos || htmlEl.dataset.animate) return;
+          htmlEl.dataset.aos = "fade-up";
+          htmlEl.dataset.aosDuration = "850";
+          htmlEl.dataset.aosOffset = "80";
+          htmlEl.dataset.aosEasing = "ease-out-cubic";
+        });
+        container.querySelectorAll("p, blockquote, li > p").forEach((el) => {
+          const htmlEl = el as HTMLElement;
+          if (htmlEl.dataset.aos || htmlEl.dataset.animate) return;
+          htmlEl.dataset.aos = "fade-up";
+          htmlEl.dataset.aosDuration = "550";
+          htmlEl.dataset.aosDelay = "100";
+          htmlEl.dataset.aosOffset = "80";
+          htmlEl.dataset.aosEasing = "ease-out-cubic";
+        });
+      }
+      AOS.refresh();
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [contentHtml]);
+
   if (loading) {
     return (
       <div className="bg-white min-h-screen pt-32 pb-20 text-center font-sans">
@@ -190,7 +222,7 @@ export default function CaseStudyDetail() {
           {/* Left Column: Cover Image & Full Details */}
           <div className="lg:col-span-8 space-y-12">
             {/* Image Showcase */}
-            <div data-tilt="standalone" className="h-96 md:h-[480px] rounded-2xl overflow-hidden relative shadow-lg border border-neutral-200">
+            <MotionTilt className="h-96 md:h-[480px] rounded-2xl overflow-hidden relative shadow-lg border border-neutral-200">
               <img
                 src={currentCase.image}
                 alt={displayTitle}
@@ -201,7 +233,7 @@ export default function CaseStudyDetail() {
               <div className="absolute bottom-6 left-6 bg-red-600 text-white font-mono text-[10px] font-bold px-3 py-1.5 rounded tracking-widest uppercase">
                 Enterprise Blueprint
               </div>
-            </div>
+            </MotionTilt>
 
             {/* Core Breakdown */}
             <div className="space-y-10">

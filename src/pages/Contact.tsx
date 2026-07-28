@@ -1,6 +1,8 @@
 import { PageBanner } from "../components/PageBanner";
 import { ContactForm } from "../components/ContactForm";
 import { FAQSection } from "../components/FAQSection";
+import { MotionTilt } from "../components/MotionTilt";
+import { MotionCard } from "../components/MotionCard";
 import { companyInfo } from "../data/company";
 import { SectionTitle } from "../components/SectionTitle";
 import { LucideIcon } from "../components/LucideIcon";
@@ -61,11 +63,13 @@ export default function Contact() {
               </div>
 
               {/* Vertical Info cards */}
-              <div data-animate="card" className="space-y-6">
+              <div className="space-y-6">
                 {contactDetails.map((det, idx) => (
-                  <div
+                  <MotionCard
                     key={idx}
                     className="flex items-start space-x-4 p-5 rounded-lg border border-neutral-200 bg-neutral-50"
+                    data-aos="fade-up"
+                    data-aos-delay={idx * 80}
                   >
                     <div className="p-3 bg-white border border-neutral-200 text-red-600 rounded shrink-0">
                       <LucideIcon name={det.icon} className="w-5 h-5" />
@@ -78,7 +82,7 @@ export default function Contact() {
                         {det.value}
                       </p>
                     </div>
-                  </div>
+                  </MotionCard>
                 ))}
               </div>
 
@@ -119,7 +123,7 @@ export default function Contact() {
           <span className="block text-[10px] font-mono text-neutral-450 uppercase tracking-widest font-semibold mb-4 text-center">
             HEADQUARTERS COORDINATES
           </span>
-          <div data-tilt="standalone" className="w-full h-80 rounded-2xl bg-black relative border-4 border-neutral-900 shadow-xl overflow-hidden flex flex-col items-center justify-center">
+          <MotionTilt className="w-full h-80 rounded-2xl bg-black relative border-4 border-neutral-900 shadow-xl overflow-hidden flex flex-col items-center justify-center">
             {/* Atmospheric technical grid */}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(220,38,38,0.1),transparent_70%)] pointer-events-none" />
@@ -145,7 +149,7 @@ export default function Contact() {
                 </p>
               </div>
             </div>
-          </div>
+          </MotionTilt>
         </div>
       </section>
 

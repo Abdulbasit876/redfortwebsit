@@ -1,5 +1,6 @@
 import { SectionTitle } from "./SectionTitle";
 import { LucideIcon } from "./LucideIcon";
+import { MotionCard } from "./MotionCard";
 
 export function WhyChooseUs() {
   const whyChooseUsFeatures = [
@@ -35,11 +36,13 @@ export function WhyChooseUs() {
           light
         />
 
-        <div data-animate="card" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
           {whyChooseUsFeatures.map((feat, idx) => (
-            <div
+            <MotionCard
               key={idx}
-              className="bg-neutral-950 border border-neutral-900 rounded p-6 hover:border-red-600/30 hover:bg-neutral-900 transition-all duration-300"
+              className="bg-neutral-950 border border-neutral-900 rounded p-6 transition-all duration-300 hover:bg-neutral-900 hover:border-red-600/30 hover:shadow-[0_0_15px_rgba(220,38,38,0.15)]"
+              data-aos="fade-up"
+              data-aos-delay={idx * 80}
               id={`why-choose-card-${idx}`}
             >
               <div className="text-red-600 mb-4 p-2.5 bg-black border border-neutral-850 inline-block rounded">
@@ -51,7 +54,7 @@ export function WhyChooseUs() {
               <p className="text-neutral-450 text-xs leading-relaxed font-body">
                 {feat.description}
               </p>
-            </div>
+            </MotionCard>
           ))}
         </div>
       </div>

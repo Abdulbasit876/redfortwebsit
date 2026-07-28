@@ -5,6 +5,7 @@ import { Preloader } from "./components/Preloader";
 import { useCustomCursor } from "./hooks/useCustomCursor";
 import { useLenis } from "./hooks/useLenis";
 import { useScrollAnimations } from "./hooks/useScrollAnimations";
+import { useAOS } from "./hooks/useAOS";
 import { Footer } from "./components/Footer";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -53,8 +54,11 @@ function AppContent() {
   // Initialize Lenis smooth scrolling globally (works on every page)
   useLenis();
 
-  // Initialize global scroll animations (headings, text, cards, buttons)
+  // Initialize global scroll animations (headings, text only)
   useScrollAnimations();
+
+  // Initialize AOS for card reveal animations
+  useAOS();
 
   return (
     <>

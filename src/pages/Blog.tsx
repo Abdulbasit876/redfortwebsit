@@ -1,10 +1,10 @@
 import { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { AnimatePresence } from "motion/react";
 import { BlogPost } from "../types";
 import { PageBanner } from "../components/PageBanner";
 import { SectionTitle } from "../components/SectionTitle";
 import { LucideIcon } from "../components/LucideIcon";
+import { MotionCard } from "../components/MotionCard";
 import { apiUrl, getImageUrl } from "../lib/api";
 
 export default function BlogIndex() {
@@ -214,11 +214,13 @@ export default function BlogIndex() {
           )}
 
           {/* Blogs Grid */}
-          <div data-animate="card" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {paginatedBlogs.map((post, idx) => (
-              <article
+              <MotionCard
                 key={post.id}
-                className="bg-white rounded-lg border border-neutral-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:border-red-600/20"
+                className="bg-white rounded-lg border border-neutral-200 shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between overflow-hidden group hover:border-red-600/20"
+                data-aos="fade-up"
+                data-aos-delay={idx * 80}
               >
                   <div className="h-52 overflow-hidden relative">
                     <img
@@ -261,7 +263,7 @@ export default function BlogIndex() {
                       </Link>
                     </div>
                   </div>
-                </article>
+                </MotionCard>
               ))}
           </div>
 

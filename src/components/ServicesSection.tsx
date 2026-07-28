@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { motion } from "motion/react";
 import { SectionTitle } from "./SectionTitle";
 import { LucideIcon } from "./LucideIcon";
+import { MotionCard } from "./MotionCard";
 import { apiUrl } from "../lib/api";
 import type { Service } from "../types";
 
@@ -104,7 +104,7 @@ export function ServicesSection({ limit, showTitle = true }: ServicesSectionProp
           </div>
         )}
 
-        <div data-animate="card" className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {loading && (
             <div className="md:col-span-2 flex flex-col items-center justify-center py-16">
               <div className="w-8 h-8 border-4 border-neutral-200 border-t-red-600 rounded-full animate-spin" />
@@ -128,9 +128,11 @@ export function ServicesSection({ limit, showTitle = true }: ServicesSectionProp
             const preview = getDescriptionPreview(srv.description);
 
             return (
-              <div
+              <MotionCard
                 key={srv.id}
-                className="bg-white rounded-lg p-8 border border-neutral-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group cursor-pointer hover:border-red-600/30"
+                className="bg-white rounded-lg p-8 border border-neutral-200/80 shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between group cursor-pointer hover:border-red-600/30"
+                data-aos="fade-up"
+                data-aos-delay={idx * 80}
                 id={`srv-card-${srv.id}`}
                 onClick={() => navigate(`/services/${srv.slug || srv.id}`)}
                 role="button"
@@ -165,7 +167,7 @@ export function ServicesSection({ limit, showTitle = true }: ServicesSectionProp
                   <span>LEARN MORE</span>
                   <span>→</span>
                 </Link>
-              </div>
+              </MotionCard>
             );
           })}
         </div>

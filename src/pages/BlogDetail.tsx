@@ -1,10 +1,12 @@
 import { useMemo, useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { motion } from "motion/react";
+import AOS from "aos";
 import { BlogPost } from "../types";
 import { PageBanner } from "../components/PageBanner";
 import { CTA } from "../components/CTA";
 import { LucideIcon } from "../components/LucideIcon";
+import { MotionTilt } from "../components/MotionTilt";
+import { MotionCard } from "../components/MotionCard";
 import { apiUrl, getImageUrl } from "../lib/api";
 
 export default function BlogDetail() {
@@ -67,6 +69,36 @@ export default function BlogDetail() {
 
     return () => ac.abort();
   }, [slug]);
+
+  // Apply AOS animations to dynamically loaded content
+  useEffect(() => {
+    if (!currentPost?.content) return;
+    const timer = setTimeout(() => {
+      // Animate headings and paragraphs inside the article content
+      const articleContent = document.querySelector(".lg\\:col-span-9");
+      if (articleContent) {
+        articleContent.querySelectorAll("h1, h2, h3, h4").forEach((el) => {
+          const htmlEl = el as HTMLElement;
+          if (htmlEl.dataset.aos || htmlEl.dataset.animate) return;
+          htmlEl.dataset.aos = "fade-up";
+          htmlEl.dataset.aosDuration = "850";
+          htmlEl.dataset.aosOffset = "80";
+          htmlEl.dataset.aosEasing = "ease-out-cubic";
+        });
+        articleContent.querySelectorAll("p, blockquote, li > p").forEach((el) => {
+          const htmlEl = el as HTMLElement;
+          if (htmlEl.dataset.aos || htmlEl.dataset.animate) return;
+          htmlEl.dataset.aos = "fade-up";
+          htmlEl.dataset.aosDuration = "550";
+          htmlEl.dataset.aosDelay = "100";
+          htmlEl.dataset.aosOffset = "80";
+          htmlEl.dataset.aosEasing = "ease-out-cubic";
+        });
+      }
+      AOS.refresh();
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [currentPost]);
 
   // Fetch list of blogs to show related posts
   useEffect(() => {
@@ -265,14 +297,14 @@ export default function BlogDetail() {
       <article className="py-16 md:py-24 bg-white relative">
         <div className="max-w-4xl mx-auto px-6">
           {/* Article Cover Image */}
-          <div data-tilt="standalone" className="aspect-[21/9] rounded-2xl overflow-hidden shadow-lg mb-12 border border-neutral-200">
+          <MotionTilt className="aspect-[21/9] rounded-2xl overflow-hidden shadow-lg mb-12 border border-neutral-200">
             <img
               src={currentPost.image}
               alt={currentPost.title}
               className="w-full h-full object-cover grayscale"
               referrerPolicy="no-referrer"
             />
-          </div>
+          </MotionTilt>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             {/* Left sidebar: Share & tags */}
@@ -376,11 +408,13 @@ export default function BlogDetail() {
               Related Technical Publications
             </h2>
 
-            <div data-animate="card" className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {relatedBlogs.map((post) => (
-                <div
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {relatedBlogs.map((post, idx) => (
+                <MotionCard
                   key={post.id}
-                  className="bg-white rounded-lg border border-neutral-200 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden group"
+                  className="bg-white rounded-lg border border-neutral-200 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col justify-between overflow-hidden group"
+                  data-aos="fade-up"
+                  data-aos-delay={idx * 80}
                 >
                   <div className="h-44 overflow-hidden">
                     <img
@@ -409,7 +443,7 @@ export default function BlogDetail() {
                       <span>→</span>
                     </Link>
                   </div>
-                </div>
+                </MotionCard>
               ))}
             </div>
           </div>

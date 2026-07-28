@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { BlogPost } from "../types";
 import { SectionTitle } from "./SectionTitle";
 import { LucideIcon } from "./LucideIcon";
+import { MotionCard } from "./MotionCard";
 import { apiUrl, getImageUrl } from "../lib/api";
 
 interface LatestBlogsProps {
@@ -121,11 +122,13 @@ export function LatestBlogs({ limit, showTitle = true }: LatestBlogsProps) {
         )}
 
         {/* Blog Grid */}
-        <div data-animate="card" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {displayedBlogs.map((post, idx) => (
-            <article
+            <MotionCard
               key={post.id}
-              className="bg-white rounded-lg border border-neutral-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:border-red-600/20"
+              className="bg-white rounded-lg border border-neutral-200 shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between overflow-hidden group hover:border-red-600/20"
+              data-aos="fade-up"
+              data-aos-delay={idx * 80}
               id={`blog-post-${post.id}`}
             >
               {/* Cover Image */}
@@ -186,7 +189,7 @@ export function LatestBlogs({ limit, showTitle = true }: LatestBlogsProps) {
                   </div>
                 </div>
               </div>
-            </article>
+            </MotionCard>
           ))}
         </div>
 

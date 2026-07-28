@@ -1,12 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "motion/react";
 import { LucideIcon } from "./LucideIcon";
 import { apiUrl, getImageUrl } from "../lib/api";
-import {
-  useHeroAnimations,
-  useImageTilt,
-  useFloatingAnimation,
-} from "../hooks/useHeroAnimations";
+import { useHeroAnimations } from "../hooks/useHeroAnimations";
+import { useMotionTilt } from "../hooks/useMotionTilt";
+
 const FALLBACK_IMAGE =
   "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800";
 
@@ -47,17 +46,14 @@ export function Hero() {
   const [heroContent, setHeroContent] = useState(fallbackHeroContent);
   const [loading, setLoading] = useState(true);
   const [isReducedMotion, setIsReducedMotion] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
-  // Refs for GSAP animations
+  // Refs for GSAP text animations
   const containerRef = useRef<HTMLDivElement>(null!);
   const headingRef = useRef<HTMLHeadingElement>(null!);
-  const descriptionRef = useRef<HTMLDivElement>(null!);
-  const buttonsRef = useRef<HTMLDivElement>(null!);
-  const imageRef = useRef<HTMLDivElement>(null!);
-  const gridRef = useRef<HTMLDivElement>(null!);
-  const glowRef = useRef<HTMLDivElement>(null!);
-  const trustRef = useRef<HTMLDivElement>(null!);
-  const imageContainerRef = useRef<HTMLDivElement>(null!);
+
+  // Motion tilt for hero image
+  const tilt = useMotionTilt(1.02, 6);
 
   // Check for reduced motion preference
   useEffect(() => {
@@ -68,24 +64,12 @@ export function Hero() {
     return () => mq.removeEventListener("change", handler);
   }, []);
 
-  // GSAP hero animations
+  // GSAP hero text animations only
   useHeroAnimations(
     containerRef,
     headingRef,
-    descriptionRef,
-    buttonsRef,
-    imageRef,
-    gridRef,
-    glowRef,
-    trustRef,
     isReducedMotion
   );
-
-  // 3D tilt on image
-  useImageTilt(imageContainerRef, isReducedMotion);
-
-  // Floating animation on image
-  useFloatingAnimation(imageRef, isReducedMotion);
 
   // Fetch hero content (unchanged business logic)
   useEffect(() => {
@@ -139,20 +123,14 @@ export function Hero() {
     >
       {/* ===== AMBIENT GLOW LAYERS ===== */}
       {/* Main red ambient glow behind image area */}
-      <div
-        ref={glowRef}
-        className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-600/15 blur-[180px] rounded-full pointer-events-none will-change-transform"
-      />
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-600/15 blur-[180px] rounded-full pointer-events-none will-change-transform" />
       {/* Secondary subtle white glow */}
       <div className="absolute -left-20 -top-20 w-96 h-96 bg-white/[0.02] blur-[150px] rounded-full pointer-events-none" />
       {/* Bottom right accent glow */}
       <div className="absolute -bottom-32 right-1/4 w-[400px] h-[400px] bg-red-600/5 blur-[120px] rounded-full pointer-events-none" />
 
       {/* ===== ENHANCED GRID BACKGROUND ===== */}
-      <div
-        ref={gridRef}
-        className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:40px_40px] md:bg-[size:48px_48px] pointer-events-none will-change-transform"
-      />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:40px_40px] md:bg-[size:48px_48px] pointer-events-none will-change-transform" />
       {/* Subtle radial gradient overlay for depth */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_rgba(0,0,0,0.4)_100%)] pointer-events-none" />
 
@@ -193,10 +171,7 @@ export function Hero() {
             </h1>
 
             {/* ===== DESCRIPTION ===== */}
-            <div
-              ref={descriptionRef}
-              className="text-neutral-400 text-base md:text-lg lg:text-xl max-w-xl leading-relaxed font-body will-change-transform"
-            >
+            <div className="text-neutral-400 text-base md:text-lg lg:text-xl max-w-xl leading-relaxed font-body will-change-transform">
               {loading ? (
                 <div className="space-y-3">
                   <div className="h-4 w-full rounded bg-neutral-800/70 animate-pulse" />
@@ -209,7 +184,7 @@ export function Hero() {
             </div>
 
             {/* ===== ACTION BUTTONS ===== */}
-            <div ref={buttonsRef} className="flex flex-wrap gap-5 pt-2">
+            <div className="flex flex-wrap gap-5 pt-2">
               {loading ? (
                 <div className="inline-flex h-14 w-44 animate-pulse rounded bg-neutral-800/70" />
               ) : (
@@ -248,10 +223,7 @@ export function Hero() {
             </div>
 
             {/* ===== TRUST BADGES ===== */}
-            <div
-              ref={trustRef}
-              className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-white/[0.06] will-change-transform"
-            >
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-white/[0.06] will-change-transform">
               {trustBadges.map((badge, idx) => (
                 <div key={idx} className="flex items-center gap-3 group">
                   <div className="p-2 bg-white/[0.03] border border-white/[0.06] rounded-lg text-red-600 shrink-0 transition-all duration-300 group-hover:bg-red-600/10 group-hover:border-red-600/20 group-hover:shadow-lg group-hover:shadow-red-600/5">
@@ -267,15 +239,43 @@ export function Hero() {
 
           {/* ===== COLUMN 2: IMAGE (ALWAYS VISIBLE) ===== */}
           <div className="w-full lg:w-[45%]">
-            <div ref={imageRef} className="relative will-change-transform">
+            <motion.div
+              className="relative will-change-transform"
+              animate={
+                !isReducedMotion
+                  ? {
+                      y: isHovered ? 0 : [0, -8, 0],
+                    }
+                  : {}
+              }
+              transition={
+                !isReducedMotion
+                  ? {
+                      y: {
+                        duration: 3,
+                        ease: "easeInOut",
+                        repeat: isHovered ? 0 : Infinity,
+                        repeatType: "reverse",
+                      },
+                    }
+                  : {}
+              }
+            >
               {/* Red ambient glow behind image */}
-              <div className="hero-image-glow absolute -inset-10 bg-red-600/20 blur-[100px] rounded-full opacity-0 will-change-transform" />
+              <div className="absolute -inset-10 bg-red-600/20 blur-[100px] rounded-full opacity-0 will-change-transform" />
 
               {/* Image container with 3D tilt */}
-              <div
-                ref={imageContainerRef}
+              <motion.div
                 className="relative"
-                style={{ perspective: "1000px" }}
+                style={tilt.style}
+                onMouseMove={(e) => {
+                  setIsHovered(true);
+                  tilt.onMouseMove(e);
+                }}
+                onMouseLeave={() => {
+                  setIsHovered(false);
+                  tilt.onMouseLeave();
+                }}
               >
                 <div className="hero-image-inner relative rounded-2xl overflow-hidden will-change-transform">
                   {loading ? (
@@ -307,8 +307,8 @@ export function Hero() {
                     </>
                   )}
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
       </div>

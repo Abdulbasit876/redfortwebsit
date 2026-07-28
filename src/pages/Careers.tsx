@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { PageBanner } from "../components/PageBanner";
 import { SectionTitle } from "../components/SectionTitle";
 import { LucideIcon } from "../components/LucideIcon";
+import { MotionCard } from "../components/MotionCard";
 import { CTA } from "../components/CTA";
 
 interface JobRole {
@@ -206,7 +207,7 @@ export default function CareersPage() {
               </p>
             </div>
 
-            <div data-animate="card" className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
               {[
                 {
                   icon: "Cpu",
@@ -229,16 +230,18 @@ export default function CareersPage() {
                   desc: "Enjoy comfortable, ergonomic hybrid structures and comprehensive insurance plans."
                 }
               ].map((val, idx) => (
-                <div
+                <MotionCard
                   key={idx}
-                  className="p-6 bg-neutral-50 border border-neutral-100 rounded-xl space-y-4 hover:border-neutral-200 hover:shadow-sm transition-all duration-300"
+                  className="p-6 bg-neutral-50 border border-neutral-100 rounded-xl space-y-4 transition-all duration-300"
+                  data-aos="fade-up"
+                  data-aos-delay={idx * 80}
                 >
                   <div className="w-10 h-10 bg-red-600/5 text-red-600 rounded-lg flex items-center justify-center">
                     <LucideIcon name={val.icon} className="w-5 h-5" />
                   </div>
                   <h3 className="font-sans font-bold text-neutral-900 text-base">{val.title}</h3>
                   <p className="font-body text-xs text-neutral-500 leading-relaxed">{val.desc}</p>
-                </div>
+                </MotionCard>
               ))}
             </div>
 

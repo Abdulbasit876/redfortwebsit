@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { SectionTitle } from "./SectionTitle";
 import { LucideIcon } from "./LucideIcon";
+import { MotionCard } from "./MotionCard";
 import { apiUrl, getImageUrl } from "../lib/api";
 import type { Industry } from "../types";
 
@@ -108,79 +109,81 @@ export function IndustriesSection({ limit }: IndustriesSectionProps) {
           <div className="text-center py-16 text-sm text-neutral-500">No industries are available at the moment.</div>
         )}
 
-          {!loading && !error && displayedIndustries.length > 0 && (
-            <div data-animate="card" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {displayedIndustries.map((ind, idx) => {
-                const isExpanded = expandedId === ind.id;
+        {!loading && !error && displayedIndustries.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {displayedIndustries.map((ind, idx) => {
+              const isExpanded = expandedId === ind.id;
 
-                return (
-                  <div
-                    key={ind.id}
-                    className="bg-white border border-neutral-200 rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group cursor-pointer hover:border-red-600/30"
-                    onClick={() => setExpandedId(isExpanded ? null : ind.id)}
-                    id={`ind-card-${ind.id}`}
-                  >
-                {/* Image Section */}
-                <div className="h-48 relative overflow-hidden">
-                  <img
-                    src={ind.image}
-                    alt={ind.title}
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-red-600/10 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  
-                  {/* Floating Icon */}
-                  <div className="absolute top-4 left-4 p-2.5 bg-black text-white rounded shadow-md group-hover:bg-red-600 transition-colors duration-300">
-                    <LucideIcon name={ind.icon} className="w-5 h-5" />
-                  </div>
-                </div>
-
-                {/* Content Section */}
-                <div className="p-6 flex-grow flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-xl font-bold text-black mb-3 font-sans group-hover:text-red-600 transition-colors duration-200">
-                      {ind.title}
-                    </h3>
-                    <p className="text-neutral-500 text-sm leading-relaxed mb-4">
-                      {ind.description}
-                    </p>
+              return (
+                <MotionCard
+                  key={ind.id}
+                  className="bg-white border border-neutral-200 rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col group cursor-pointer hover:border-red-600/30"
+                  data-aos="fade-up"
+                  data-aos-delay={idx * 80}
+                  onClick={() => setExpandedId(isExpanded ? null : ind.id)}
+                  id={`ind-card-${ind.id}`}
+                >
+                  {/* Image Section */}
+                  <div className="h-48 relative overflow-hidden">
+                    <img
+                      src={ind.image}
+                      alt={ind.title}
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-red-600/10 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    {/* Floating Icon */}
+                    <div className="absolute top-4 left-4 p-2.5 bg-black text-white rounded shadow-md group-hover:bg-red-600 transition-colors duration-300">
+                      <LucideIcon name={ind.icon} className="w-5 h-5" />
+                    </div>
                   </div>
 
-                  <div>
-                    {/* Learn More Toggle Indicator */}
-                    <div className="inline-flex items-center space-x-2 text-xs font-bold font-sans tracking-wider text-red-600 mt-2">
-                      <span>{isExpanded ? "HIDE BENEFITS" : "LEARN MORE BENEFITS"}</span>
-                      <span>{isExpanded ? "↑" : "↓"}</span>
+                  {/* Content Section */}
+                  <div className="p-6 flex-grow flex flex-col justify-between">
+                    <div>
+                      <h3 className="text-xl font-bold text-black mb-3 font-sans group-hover:text-red-600 transition-colors duration-200">
+                        {ind.title}
+                      </h3>
+                      <p className="text-neutral-500 text-sm leading-relaxed mb-4">
+                        {ind.description}
+                      </p>
                     </div>
 
-                    {/* Expandable Benefits with AnimatePresence */}
-                    <AnimatePresence initial={false}>
-                      {isExpanded && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="overflow-hidden mt-4 pt-4 border-t border-neutral-100"
-                        >
-                          <h4 className="text-xs font-body uppercase tracking-widest text-red-600 mb-2">
-                            Segment Benefits
-                          </h4>
-                          <ul className="space-y-2">
-                            {ind.benefits.map((benefit, bIdx) => (
-                              <li key={bIdx} className="text-xs text-neutral-600 flex items-start space-x-2 font-body">
-                                <span className="text-red-600 font-bold">•</span>
-                                <span>{benefit}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                    <div>
+                      {/* Learn More Toggle Indicator */}
+                      <div className="inline-flex items-center space-x-2 text-xs font-bold font-sans tracking-wider text-red-600 mt-2">
+                        <span>{isExpanded ? "HIDE BENEFITS" : "LEARN MORE BENEFITS"}</span>
+                        <span>{isExpanded ? "↑" : "↓"}</span>
+                      </div>
+
+                      {/* Expandable Benefits with AnimatePresence */}
+                      <AnimatePresence initial={false}>
+                        {isExpanded && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="overflow-hidden mt-4 pt-4 border-t border-neutral-100"
+                          >
+                            <h4 className="text-xs font-body uppercase tracking-widest text-red-600 mb-2">
+                              Segment Benefits
+                            </h4>
+                            <ul className="space-y-2">
+                              {ind.benefits.map((benefit, bIdx) => (
+                                <li key={bIdx} className="text-xs text-neutral-600 flex items-start space-x-2 font-body">
+                                  <span className="text-red-600 font-bold">•</span>
+                                  <span>{benefit}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
                   </div>
-                </div>
-                </div>
+                </MotionCard>
               );
             })}
           </div>

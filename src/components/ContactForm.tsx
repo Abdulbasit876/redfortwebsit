@@ -51,7 +51,7 @@ export function ContactForm() {
   };
 
   return (
-    <div className="bg-white rounded-xl border border-neutral-200 p-8 md:p-10 shadow-lg relative overflow-hidden">
+    <div className="bg-white rounded-xl border border-neutral-200 p-8 md:p-10 shadow-lg relative overflow-hidden" data-aos="fade-up" data-aos-delay="0">
       
       <AnimatePresence>
         {submitSuccess ? (
