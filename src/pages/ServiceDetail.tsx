@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import AOS from "aos";
 import { FAQSection } from "../components/FAQSection";
 import { LucideIcon } from "../components/LucideIcon";
 import { apiUrl } from "../lib/api";
@@ -69,34 +68,6 @@ export default function ServiceDetailPage() {
     };
   }, [id]);
 
-  // Apply AOS animations to dynamically loaded content
-  useEffect(() => {
-    if (!service?.description) return;
-    const timer = setTimeout(() => {
-      const container = document.querySelector('[data-animate="text"]');
-      if (!container) return;
-      container.querySelectorAll("h1, h2, h3, h4").forEach((el) => {
-        const htmlEl = el as HTMLElement;
-        if (htmlEl.dataset.aos || htmlEl.dataset.animate) return;
-        htmlEl.dataset.aos = "fade-up";
-        htmlEl.dataset.aosDuration = "850";
-        htmlEl.dataset.aosOffset = "80";
-        htmlEl.dataset.aosEasing = "ease-out-cubic";
-      });
-      container.querySelectorAll("p, blockquote, li > p").forEach((el) => {
-        const htmlEl = el as HTMLElement;
-        if (htmlEl.dataset.aos || htmlEl.dataset.animate) return;
-        htmlEl.dataset.aos = "fade-up";
-        htmlEl.dataset.aosDuration = "550";
-        htmlEl.dataset.aosDelay = "100";
-        htmlEl.dataset.aosOffset = "80";
-        htmlEl.dataset.aosEasing = "ease-out-cubic";
-      });
-      AOS.refresh();
-    }, 100);
-    return () => clearTimeout(timer);
-  }, [service]);
-
   return (
     <div className="min-h-screen bg-white py-20 md:py-28">
       <div className="max-w-4xl mx-auto px-6">
@@ -126,7 +97,6 @@ export default function ServiceDetailPage() {
 
           {!loading && !error && service?.description && (
             <div
-              data-animate="text"
               className="prose prose-sm md:prose-base max-w-none prose-headings:font-sans prose-p:text-neutral-700 prose-a:text-red-600 prose-li:text-neutral-700"
               dangerouslySetInnerHTML={{ __html: service.description }}
             />
