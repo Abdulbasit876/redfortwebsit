@@ -70,36 +70,6 @@ export default function BlogDetail() {
     return () => ac.abort();
   }, [slug]);
 
-  // Apply AOS animations to dynamically loaded content
-  useEffect(() => {
-    if (!currentPost?.content) return;
-    const timer = setTimeout(() => {
-      // Animate headings and paragraphs inside the article content
-      const articleContent = document.querySelector(".lg\\:col-span-9");
-      if (articleContent) {
-        articleContent.querySelectorAll("h1, h2, h3, h4").forEach((el) => {
-          const htmlEl = el as HTMLElement;
-          if (htmlEl.dataset.aos || htmlEl.dataset.animate) return;
-          htmlEl.dataset.aos = "fade-up";
-          htmlEl.dataset.aosDuration = "850";
-          htmlEl.dataset.aosOffset = "80";
-          htmlEl.dataset.aosEasing = "ease-out-cubic";
-        });
-        articleContent.querySelectorAll("p, blockquote, li > p").forEach((el) => {
-          const htmlEl = el as HTMLElement;
-          if (htmlEl.dataset.aos || htmlEl.dataset.animate) return;
-          htmlEl.dataset.aos = "fade-up";
-          htmlEl.dataset.aosDuration = "550";
-          htmlEl.dataset.aosDelay = "100";
-          htmlEl.dataset.aosOffset = "80";
-          htmlEl.dataset.aosEasing = "ease-out-cubic";
-        });
-      }
-      AOS.refresh();
-    }, 100);
-    return () => clearTimeout(timer);
-  }, [currentPost]);
-
   // Fetch list of blogs to show related posts
   useEffect(() => {
     const ac = new AbortController();
